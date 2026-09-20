@@ -1,1210 +1,1632 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Agroverse AI</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agroverse AI</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
-
-    body {
-      background: #f4f8f3;
-      color: #183b20;
-    }
-
-    .app {
-      max-width: 480px;
-      margin: auto;
-      min-height: 100vh;
-      background: #f7fbf5;
-      padding-bottom: 80px;
-    }
-
-    header {
-      background: linear-gradient(135deg, #176b35, #42a85f);
-      color: white;
-      padding: 28px 20px 25px;
-      border-radius: 0 0 28px 28px;
-    }
-
-    .top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-size: 25px;
-      font-weight: bold;
-    }
-
-    .logo span {
-      color: #d8ff83;
-    }
-
-    .profile {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: white;
-      color: #176b35;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-    }
-
-    .welcome {
-      margin-top: 25px;
-    }
-
-    .welcome p {
-      opacity: .9;
-      font-size: 14px;
-    }
-
-    .welcome h1 {
-      margin-top: 5px;
-      font-size: 27px;
-    }
-
-    .location {
-      margin-top: 8px;
-      font-size: 13px;
-      opacity: .9;
-    }
-
-    main {
-      padding: 18px;
-    }
-
-    .section-title {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 8px 0 12px;
-    }
-
-    .section-title h2 {
-      font-size: 19px;
-    }
-
-    .section-title span {
-      font-size: 12px;
-      color: #438650;
-    }
-
-    .weather {
-      background: white;
-      border-radius: 20px;
-      padding: 18px;
-      box-shadow: 0 5px 18px rgba(0,0,0,.07);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .weather-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .weather-icon {
-      font-size: 40px;
-    }
-
-    .temperature {
-      font-size: 28px;
-      font-weight: bold;
-    }
-
-    .weather small {
-      color: #68776b;
-    }
-
-    .farm-card {
-      background: #e7f5e5;
-      border-radius: 20px;
-      padding: 18px;
-      margin-top: 15px;
-    }
-
-    .farm-card h3 {
-      font-size: 18px;
-      margin-bottom: 12px;
-    }
-
-    .farm-info {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .info {
-      background: white;
-      padding: 12px;
-      border-radius: 14px;
-    }
-
-    .info small {
-      color: #718074;
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    .info strong {
-      font-size: 15px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .feature {
-      background: white;
-      border: none;
-      border-radius: 18px;
-      padding: 18px 12px;
-      text-align: left;
-      box-shadow: 0 4px 15px rgba(0,0,0,.06);
-      cursor: pointer;
-    }
-
-    .feature .icon {
-      font-size: 30px;
-      margin-bottom: 10px;
-    }
-
-    .feature h3 {
-      font-size: 15px;
-      margin-bottom: 5px;
-    }
-
-    .feature p {
-      color: #758078;
-      font-size: 12px;
-      line-height: 1.4;
-    }
-
-    .recommendation {
-      background: linear-gradient(135deg, #fff8d9, #fffef1);
-      border-radius: 20px;
-      padding: 18px;
-      margin-top: 15px;
-      border: 1px solid #f0e5a4;
-    }
-
-    .recommendation h3 {
-      margin-bottom: 8px;
-    }
-
-    .recommendation p {
-      font-size: 13px;
-      line-height: 1.5;
-      color: #62634e;
-    }
-
-    .ai-button {
-      margin-top: 12px;
-      width: 100%;
-      border: none;
-      background: #176b35;
-      color: white;
-      padding: 13px;
-      border-radius: 13px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .alert {
-      background: #fff0e8;
-      border-radius: 18px;
-      padding: 15px;
-      margin-top: 15px;
-      border-left: 5px solid #ef8b45;
-    }
-
-    .alert h3 {
-      font-size: 15px;
-      margin-bottom: 5px;
-    }
-
-    .alert p {
-      font-size: 12px;
-      color: #725d50;
-    }
-
-    nav {
-      position: fixed;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      max-width: 480px;
-      background: white;
-      border-top: 1px solid #e4e9e3;
-      display: flex;
-      justify-content: space-around;
-      padding: 10px 5px;
-      z-index: 10;
-    }
-
-    nav button {
-      border: none;
-      background: none;
-      color: #758078;
-      font-size: 11px;
-      cursor: pointer;
-    }
-
-    nav button:first-child {
-      color: #176b35;
-      font-weight: bold;
-    }
-
-    nav div {
-      font-size: 20px;
-      margin-bottom: 3px;
-    }
-
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.45);
-      z-index: 20;
-      align-items: flex-end;
-      justify-content: center;
-    }
-
-    .modal-box {
-      width: 100%;
-      max-width: 480px;
-      background: white;
-      padding: 25px;
-      border-radius: 25px 25px 0 0;
-    }
-
-    .modal-box h2 {
-      margin-bottom: 10px;
-    }
-
-    .modal-box p {
-      color: #68776b;
-      line-height: 1.5;
-      font-size: 14px;
-    }
-
-    .close {
-      margin-top: 18px;
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 12px;
-      background: #176b35;
-      color: white;
-    }
-  </style>
-</head>
-
-<body>
-
-<div class="app">
-
-  <header>
-    <div class="top">
-      <div class="logo">🌱 Agroverse <span>AI</span></div>
-      <div class="profile">R</div>
-    </div>
-
-    <div class="welcome">
-      <p>Good morning, Farmer 👋</p>
-      <h1>Let's grow smarter today.</h1>
-      <div class="location">📍 Tamil Nadu, India</div>
-    </div>
-  </header>
-
-  <main>
-
-    <div class="section-title">
-      <h2>Today's Farm</h2>
-      <span>Live dashboard</span>
-    </div>
-
-    <div class="weather">
-      <div class="weather-left">
-        <div class="weather-icon">🌤️</div>
-        <div>
-          <div class="temperature">29°C</div>
-          <small>Partly cloudy</small>
-        </div>
-      </div>
-
-      <div>
-        <strong>72%</strong><br>
-        <small>Humidity</small>
-      </div>
-    </div>
-
-    <div class="farm-card">
-      <h3>🌾 My Farm</h3>
-
-      <div class="farm-info">
-        <div class="info">
-          <small>Crop</small>
-          <strong>🌾 Paddy</strong>
-        </div>
-
-        <div class="info">
-          <small>Farm Area</small>
-          <strong>2.5 Acres</strong>
-        </div>
-
-        <div class="info">
-          <small>Soil</small>
-          <strong>Clay Loam</strong>
-        </div>
-
-        <div class="info">
-          <small>Crop Stage</small>
-          <strong>Vegetative</strong>
-        </div>
-      </div>
-    </div>
-
-    <div class="section-title" style="margin-top:22px;">
-      <h2>Smart Tools</h2>
-    </div>
-
-    <div class="grid">
-
-      <button class="feature" onclick="openModal('💧 Smart Irrigation','Based on the current farm information, irrigation should be planned according to soil moisture, crop stage and upcoming rainfall. Real sensor data can be connected later.')">
-        <div class="icon">💧</div>
-        <h3>Smart Irrigation</h3>
-        <p>Know when your crop needs water.</p>
-      </button>
-
-      <button class="feature" onclick="openModal('📷 Disease Detection','Upload a crop image in the future to identify possible diseases, symptoms and recommended actions using an AI model.')">
-        <div class="icon">📷</div>
-        <h3>Disease Detection</h3>
-        <p>Check your crop health using AI.</p>
-      </button>
-
-      <button class="feature" onclick="openModal('🌱 Crop Recommendation','Agroverse AI can recommend suitable crops using soil, climate, water availability and season information.')">
-        <div class="icon">🌱</div>
-        <h3>Crop Recommendation</h3>
-        <p>Find crops suitable for your farm.</p>
-      </button>
-
-      <button class="feature" onclick="openModal('🤖 Agro AI Assistant','Ask farming questions in simple language. Tamil and English support can be connected to an AI service in the next stage.')">
-        <div class="icon">🤖</div>
-        <h3>Agro AI</h3>
-        <p>Your intelligent farming assistant.</p>
-      </button>
-
-    </div>
-
-    <div class="recommendation">
-      <h3>🤖 Today's AI Insight</h3>
-      <p>
-        Monitor your paddy field regularly. Check soil moisture before irrigation
-        and keep an eye on weather changes during the crop's vegetative stage.
-      </p>
-
-      <button class="ai-button" onclick="openModal('🤖 Agro AI Assistant','Hello Farmer! Ask me about crops, irrigation, diseases, soil, weather or farm management.')">
-        Ask Agro AI
-      </button>
-    </div>
-
-    <div class="alert">
-      <h3>🔔 Farm Reminder</h3>
-      <p>Remember to check field moisture and inspect your crop for early signs of pests or disease.</p>
-    </div>
-
-  </main>
-
-  <nav>
-    <button><div>🏠</div>Home</button>
-    <button onclick="openModal('🌾 My Farm','Your farm profile, crops, soil information and farm records will appear here.')"><div>🌾</div>My Farm</button>
-    <button onclick="openModal('🤖 Agro AI','Your AI farming assistant will be available here.')"><div>🤖</div>Agro AI</button>
-    <button onclick="openModal('📊 Analytics','Farm expenses, yield and profit analytics will appear here.')"><div>📊</div>Analytics</button>
-    <button onclick="openModal('👤 Profile','Farmer profile and settings will appear here.')"><div>👤</div>Profile</button>
-  </nav>
-
-</div>
-
-<div class="modal" id="modal">
-  <div class="modal-box">
-    <h2 id="modalTitle"></h2>
-    <p id="modalText"></p>
-    <button class="close" onclick="closeModal()">Close</button>
-  </div>
-</div>
-
-<script>
-  function openModal(title, text) {
-    document.getElementById("modalTitle").innerText = title;
-    document.getElementById("modalText").innerText = text;
-    document.getElementById("modal").style.display = "flex";
-  }
-
-  function closeModal() {
-    document.getElementById("modal").style.display = "none";
-  }
-
-  document.getElementById("modal").addEventListener("click", function(e) {
-    if (e.target === this) {
-      closeModal();
-    }
-  });
-</script>
-
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Agroverse AI</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
-
-    body {
-      background: #f4f8f3;
-      color: #183b20;
-    }
-
-    .app {
-      max-width: 480px;
-      margin: auto;
-      min-height: 100vh;
-      background: #f7fbf5;
-      padding-bottom: 80px;
-    }
-
-    header {
-      background: linear-gradient(135deg, #176b35, #42a85f);
-      color: white;
-      padding: 28px 20px 25px;
-      border-radius: 0 0 28px 28px;
-    }
-
-    .top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-size: 25px;
-      font-weight: bold;
-    }
-
-    .logo span {
-      color: #d8ff83;
-    }
-
-    .profile {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: white;
-      color: #176b35;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-    }
-
-    .welcome {
-      margin-top: 25px;
-    }
-
-    .welcome p {
-      opacity: .9;
-      font-size: 14px;
-    }
-
-    .welcome h1 {
-      margin-top: 5px;
-      font-size: 27px;
-    }
-
-    .location {
-      margin-top: 8px;
-      font-size: 13px;
-      opacity: .9;
-    }
-
-    main {
-      padding: 18px;
-    }
-
-    .section-title {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 8px 0 12px;
-    }
-
-    .section-title h2 {
-      font-size: 19px;
-    }
-
-    .section-title span {
-      font-size: 12px;
-      color: #438650;
-    }
-
-    .weather {
-      background: white;
-      border-radius: 20px;
-      padding: 18px;
-      box-shadow: 0 5px 18px rgba(0,0,0,.07);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .weather-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .weather-icon {
-      font-size: 40px;
-    }
-
-    .temperature {
-      font-size: 28px;
-      font-weight: bold;
-    }
-
-    .weather small {
-      color: #68776b;
-    }
-
-    .farm-card {
-      background: #e7f5e5;
-      border-radius: 20px;
-      padding: 18px;
-      margin-top: 15px;
-    }
-
-    .farm-card h3 {
-      font-size: 18px;
-      margin-bottom: 12px;
-    }
-
-    .farm-info {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .info {
-      background: white;
-      padding: 12px;
-      border-radius: 14px;
-    }
-
-    .info small {
-      color: #718074;
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    .info strong {
-      font-size: 15px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .feature {
-      background: white;
-      border: none;
-      border-radius: 18px;
-      padding: 18px 12px;
-      text-align: left;
-      box-shadow: 0 4px 15px rgba(0,0,0,.06);
-      cursor: pointer;
-    }
-
-    .feature .icon {
-      font-size: 30px;
-      margin-bottom: 10px;
-    }
-
-    .feature h3 {
-      font-size: 15px;
-      margin-bottom: 5px;
-    }
-
-    .feature p {
-      color: #758078;
-      font-size: 12px;
-      line-height: 1.4;
-    }
-
-    .recommendation {
-      background: linear-gradient(135deg, #fff8d9, #fffef1);
-      border-radius: 20px;
-      padding: 18px;
-      margin-top: 15px;
-      border: 1px solid #f0e5a4;
-    }
-
-    .recommendation h3 {
-      margin-bottom: 8px;
-    }
-
-    .recommendation p {
-      font-size: 13px;
-      line-height: 1.5;
-      color: #62634e;
-    }
-
-    .ai-button {
-      margin-top: 12px;
-      width: 100%;
-      border: none;
-      background: #176b35;
-      color: white;
-      padding: 13px;
-      border-radius: 13px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .alert {
-      background: #fff0e8;
-      border-radius: 18px;
-      padding: 15px;
-      margin-top: 15px;
-      border-left: 5px solid #ef8b45;
-    }
-
-    .alert h3 {
-      font-size: 15px;
-      margin-bottom: 5px;
-    }
-
-    .alert p {
-      font-size: 12px;
-      color: #725d50;
-    }
-
-    nav {
-      position: fixed;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      max-width: 480px;
-      background: white;
-      border-top: 1px solid #e4e9e3;
-      display: flex;
-      justify-content: space-around;
-      padding: 10px 5px;
-      z-index: 10;
-    }
-
-    nav button {
-      border: none;
-      background: none;
-      color: #758078;
-      font-size: 11px;
-      cursor: pointer;
-    }
-
-    nav button:first-child {
-      color: #176b35;
-      font-weight: bold;
-    }
-
-    nav div {
-      font-size: 20px;
-      margin-bottom: 3px;
-    }
-
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.45);
-      z-index: 20;
-      align-items: flex-end;
-      justify-content: center;
-    }
-
-    .modal-box {
-      width: 100%;
-      max-width: 480px;
-      background: white;
-      padding: 25px;
-      border-radius: 25px 25px 0 0;
-    }
-
-    .modal-box h2 {
-      margin-bottom: 10px;
-    }
-
-    .modal-box p {
-      color: #68776b;
-      line-height: 1.5;
-      font-size: 14px;
-    }
-
-    .close {
-      margin-top: 18px;
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 12px;
-      background: #176b35;
-      color: white;
-    }
-  </style>
-</head>
-
-<body>
-
-<div class="app">
-
-  <header>
-    <div class="top">
-      <div class="logo">🌱 Agroverse <span>AI</span></div>
-      <div class="profile">R</div>
-    </div>
-
-    <div class="welcome">
-      <p>Good morning, Farmer 👋</p>
-      <h1>Let's grow smarter today.</h1>
-      <div class="location">📍 Tamil Nadu, India</div>
-    </div>
-  </header>
-
-  <main>
-
-    <div class="section-title">
-      <h2>Today's Farm</h2>
-      <span>Live dashboard</span>
-    </div>
-
-    <div class="weather">
-      <div class="weather-left">
-        <div class="weather-icon">🌤️</div>
-        <div>
-          <div class="temperature">29°C</div>
-          <small>Partly cloudy</small>
-        </div>
-      </div>
-
-      <div>
-        <strong>72%</strong><br>
-        <small>Humidity</small>
-      </div>
-    </div>
-
-    <div class="farm-card">
-      <h3>🌾 My Farm</h3>
-
-      <div class="farm-info">
-        <div class="info">
-          <small>Crop</small>
-          <strong>🌾 Paddy</strong>
-        </div>
-
-        <div class="info">
-          <small>Farm Area</small>
-          <strong>2.5 Acres</strong>
-        </div>
-
-        <div class="info">
-          <small>Soil</small>
-          <strong>Clay Loam</strong>
-        </div>
-
-        <div class="info">
-          <small>Crop Stage</small>
-          <strong>Vegetative</strong>
-        </div>
-      </div>
-    </div>
-
-    <div class="section-title" style="margin-top:22px;">
-      <h2>Smart Tools</h2>
-    </div>
-
-    <div class="grid">
-
-      <button class="feature" onclick="openModal('💧 Smart Irrigation','Based on the current farm information, irrigation should be planned according to soil moisture, crop stage and upcoming rainfall. Real sensor data can be connected later.')">
-        <div class="icon">💧</div>
-        <h3>Smart Irrigation</h3>
-        <p>Know when your crop needs water.</p>
-      </button>
-
-      <button class="feature" onclick="openModal('📷 Disease Detection','Upload a crop image in the future to identify possible diseases, symptoms and recommended actions using an AI model.')">
-        <div class="icon">📷</div>
-        <h3>Disease Detection</h3>
-        <p>Check your crop health using AI.</p>
-      </button>
-
-      <button class="feature" onclick="openModal('🌱 Crop Recommendation','Agroverse AI can recommend suitable crops using soil, climate, water availability and season information.')">
-        <div class="icon">🌱</div>
-        <h3>Crop Recommendation</h3>
-        <p>Find crops suitable for your farm.</p>
-      </button>
-
-      <button class="feature" onclick="openModal('🤖 Agro AI Assistant','Ask farming questions in simple language. Tamil and English support can be connected to an AI service in the next stage.')">
-        <div class="icon">🤖</div>
-        <h3>Agro AI</h3>
-        <p>Your intelligent farming assistant.</p>
-      </button>
-
-    </div>
-
-    <div class="recommendation">
-      <h3>🤖 Today's AI Insight</h3>
-      <p>
-        Monitor your paddy field regularly. Check soil moisture before irrigation
-        and keep an eye on weather changes during the crop's vegetative stage.
-      </p>
-lo
-      <button class="ai-button" onclick="openModal('🤖 Agro AI Assistant','Hello Farmer! Ask me about crops, irrigation, diseases, soil, weather or farm management.')">
-        Ask Agro AI
-      </button>
-    </div>
-
-    <div class="alert">
-      <h3>🔔 Farm Reminder</h3>
-      <p>Remember to check field moisture and inspect your crop for early signs of pests or disease.</p>
-    </div>
-
-  </main>
-
-  <nav>
-    <button><div>🏠</div>Home</button>
-    <button onclick="window.location.href='farm.html'">
-  <div>🌾</div>
-  My Farm
-    </button>
-    <button onclick="openModal('🤖 Agro AI','Your AI farming assistant will be available here.')"><div>🤖</div>Agro AI</button>
-    <button onclick="openModal('📊 Analytics','Farm expenses, yield and profit analytics will appear here.')"><div>📊</div>Analytics</button>
-    <button onclick="openModal('👤 Profile','Farmer profile and settings will appear here.')"><div>👤</div>Profile</button>
-  </nav>
-
-</div>
-
-<div class="modal" id="modal">
-  <div class="modal-box">
-    <h2 id="modalTitle"></h2>
-    <p id="modalText"></p>
-    <button class="close" onclick="closeModel()">close<\
-button>
-  </div>
-</div>
-
-<script>
-  function openModal(title, text) {
-    document.getElementById("modalTitle").innerText = title;
-    document.getElementById("modalText").innerText = text;
-    document.getElementById("modal").style.display = "flex";
-  }
-
-  function closeModal() {
-    document.getElementById("modal").style.display = "none";
-  }
-
-  document.getElementById("modal").addEventListener("click", function(e) {
-    if (e.target === this) {
-      closeModal();
-    }
-  }); 
-</script>
-<!-- 🌾 AGROVERSE AI - SMART IRRIGATION -->
 <style>
-.irrigation-section {
-  margin: 20px 0;
-  padding: 20px;
-  background: linear-gradient(135deg, #e8f8ee, #f7fff9);
-  border-radius: 22px;
-  border: 1px solid #ccebd6;
-  box-shadow: 0 8px 25px rgba(0,0,0,.06);
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
-.irrigation-title {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 15px;
+:root{
+  --bg:#061a14;
+  --panel:#0d2a20;
+  --panel2:#102f24;
+  --green:#61e0a4;
+  --green2:#39c98a;
+  --text:#f2f3df;
+  --muted:#8ea69c;
+  --blue:#66d9ef;
+  --yellow:#f2c94c;
+  --red:#ff6565;
+  --border:rgba(97,224,164,.18);
 }
 
-.irrigation-title h2 {
-  margin: 0;
-  font-size: 21px;
+body{
+  font-family:Arial,sans-serif;
+  background:
+    radial-gradient(circle at top,#123c2c 0,#061a14 45%,#04110d 100%);
+  color:var(--text);
+  min-height:100vh;
 }
 
-.ai-badge {
-  background: #167c3a;
-  color: white;
-  padding: 6px 10px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: bold;
+button{
+  font:inherit;
+  cursor:pointer;
 }
 
-.irrigation-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+.app{
+  max-width:720px;
+  margin:auto;
+  min-height:100vh;
+  padding-bottom:90px;
 }
 
-.irrigation-card {
-  background: white;
-  padding: 15px;
-  border-radius: 16px;
-  border: 1px solid #e2eee6;
+header{
+  padding:30px 28px 20px;
 }
 
-.irrigation-card .icon {
-  font-size: 25px;
+.brand{
+  color:var(--green);
+  letter-spacing:4px;
+  font-size:12px;
+  font-weight:bold;
 }
 
-.irrigation-card .label {
-  font-size: 12px;
-  color: #6b7280;
-  margin-top: 5px;
+h1{
+  font-size:38px;
+  margin-top:10px;
+  line-height:1.1;
 }
 
-.irrigation-card .value {
-  font-size: 20px;
-  font-weight: bold;
-  margin-top: 3px;
+h2{
+  font-size:28px;
 }
 
-.irrigation-recommendation {
-  margin-top: 15px;
-  padding: 16px;
-  border-radius: 17px;
-  background: #167c3a;
-  color: white;
+h3{
+  font-size:19px;
 }
 
-.irrigation-recommendation h3 {
-  margin: 0 0 8px;
+.subtitle{
+  color:var(--muted);
+  margin-top:12px;
+  font-size:16px;
+  line-height:1.5;
 }
 
-.irrigation-recommendation p {
-  margin: 5px 0;
-  line-height: 1.5;
+.page{
+  display:none;
+  padding:0 20px;
 }
 
-.irrigation-button {
-  width: 100%;
-  border: none;
-  padding: 13px;
-  margin-top: 15px;
-  border-radius: 14px;
-  background: #0d5f2d;
-  color: white;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
+.page.active{
+  display:block;
 }
 
-.irrigation-button:active {
-  transform: scale(.98);
+.card{
+  background:linear-gradient(145deg,rgba(20,57,43,.95),rgba(7,30,22,.96));
+  border:1px solid var(--border);
+  border-radius:24px;
+  padding:22px;
+  margin-bottom:18px;
+  box-shadow:0 15px 35px rgba(0,0,0,.12);
 }
 
-@media(max-width:480px) {
-  .irrigation-grid {
-    grid-template-columns: 1fr 1fr;
-  }
+.hero{
+  padding:28px;
+}
+
+.big-number{
+  font-size:58px;
+  font-weight:bold;
+  margin:15px 0;
+}
+
+.status{
+  display:inline-block;
+  padding:8px 14px;
+  border-radius:20px;
+  background:rgba(97,224,164,.15);
+  color:var(--green);
+  font-weight:bold;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+.stat{
+  min-height:150px;
+}
+
+.icon{
+  font-size:28px;
+  margin-bottom:14px;
+}
+
+.label{
+  color:var(--muted);
+  font-size:14px;
+  margin-bottom:8px;
+}
+
+.value{
+  font-size:26px;
+  font-weight:bold;
+}
+
+.good{
+  color:var(--green);
+}
+
+.warning{
+  color:var(--yellow);
+}
+
+.danger{
+  color:var(--red);
+}
+
+.blue{
+  color:var(--blue);
+}
+
+.advice{
+  background:linear-gradient(135deg,#164b35,#08763e);
+  border:1px solid rgba(97,224,164,.35);
+}
+
+.advice p{
+  margin-top:10px;
+  color:#d5eadf;
+  line-height:1.5;
+}
+
+.section-title{
+  margin:28px 0 15px;
+}
+
+.section-title small{
+  display:block;
+  color:var(--green);
+  letter-spacing:3px;
+  font-size:11px;
+  margin-bottom:8px;
+}
+
+.quick{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px;
+  border-radius:20px;
+  background:rgba(14,43,33,.9);
+  border:1px solid var(--border);
+  margin-bottom:12px;
+}
+
+.quick-arrow{
+  color:var(--muted);
+  font-size:24px;
+}
+
+.btn{
+  border:0;
+  border-radius:15px;
+  padding:15px 20px;
+  width:100%;
+  background:var(--green);
+  color:#062016;
+  font-weight:bold;
+  margin-top:15px;
+}
+
+.btn.secondary{
+  background:transparent;
+  border:1px solid var(--green);
+  color:var(--green);
+}
+
+.btn.warning-btn{
+  background:#6b5720;
+  color:#ffe58a;
+}
+
+.btn.danger-btn{
+  background:#652727;
+  color:#ffb0b0;
+}
+
+.field{
+  padding:18px;
+  border-radius:20px;
+  background:#081f17;
+  border:1px solid rgba(255,255,255,.06);
+  margin-bottom:12px;
+}
+
+.field.active{
+  border:1px solid var(--green);
+  background:#0d3023;
+}
+
+.field-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.field-name{
+  font-size:20px;
+  font-weight:bold;
+}
+
+.field-info{
+  color:var(--muted);
+  margin-top:8px;
+}
+
+.field-actions{
+  display:flex;
+  gap:8px;
+  margin-top:14px;
+}
+
+.small-btn{
+  flex:1;
+  padding:11px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:transparent;
+  color:var(--text);
+}
+
+.progress{
+  height:10px;
+  background:#263b34;
+  border-radius:10px;
+  overflow:hidden;
+  margin-top:15px;
+}
+
+.progress span{
+  display:block;
+  height:100%;
+  background:var(--green);
+  border-radius:10px;
+}
+
+.weather-main{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.weather-temp{
+  font-size:58px;
+  font-weight:bold;
+}
+
+.forecast{
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+}
+
+.forecast-card{
+  min-width:130px;
+  padding:18px;
+  border-radius:18px;
+  background:#081f17;
+}
+
+.pump{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.pump-status{
+  font-size:20px;
+  font-weight:bold;
+}
+
+.switch{
+  width:65px;
+  height:36px;
+  border:0;
+  border-radius:30px;
+  background:#34433e;
+  padding:4px;
+}
+
+.switch span{
+  display:block;
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  background:#aaa;
+  transition:.2s;
+}
+
+.switch.on{
+  background:#16803c;
+}
+
+.switch.on span{
+  transform:translateX(29px);
+  background:white;
+}
+
+.slider{
+  width:100%;
+  accent-color:var(--green);
+  margin:15px 0;
+}
+
+.demo{
+  padding:18px;
+  border-radius:18px;
+  background:#071c15;
+  margin-top:12px;
+}
+
+.demo strong{
+  display:block;
+  margin-bottom:7px;
+}
+
+input,select,textarea{
+  width:100%;
+  padding:14px;
+  margin-top:7px;
+  margin-bottom:15px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:#071c15;
+  color:white;
+}
+
+label{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.chat-question{
+  padding:18px;
+  border-radius:18px;
+  background:#0c291e;
+  border:1px solid var(--border);
+  margin-bottom:12px;
+}
+
+.chat-answer{
+  margin-top:15px;
+  padding:18px;
+  background:#071c15;
+  border-radius:18px;
+  line-height:1.6;
+}
+
+.photo-box{
+  min-height:250px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  border:1px dashed rgba(97,224,164,.4);
+  border-radius:20px;
+  text-align:center;
+  padding:25px;
+}
+
+.photo-box .camera{
+  font-size:60px;
+  margin-bottom:15px;
+}
+
+.history-item{
+  padding:15px;
+  background:#071c15;
+  border-radius:15px;
+  margin-top:10px;
+  color:var(--muted);
+}
+
+.empty{
+  text-align:center;
+  color:var(--muted);
+  padding:25px;
+}
+
+nav{
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(720px,100%);
+  height:76px;
+  background:rgba(5,25,19,.97);
+  backdrop-filter:blur(15px);
+  border-top:1px solid rgba(97,224,164,.15);
+  display:flex;
+  z-index:1000;
+}
+
+.nav-btn{
+  flex:1;
+  border:0;
+  background:transparent;
+  color:#72867e;
+  font-size:11px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:5px;
+}
+
+.nav-btn span{
+  font-size:24px;
+}
+
+.nav-btn.active{
+  color:var(--green);
+}
+
+.notice{
+  padding:15px;
+  border-radius:15px;
+  background:rgba(242,201,76,.08);
+  border:1px solid rgba(242,201,76,.25);
+  color:#e5d995;
+  margin-top:15px;
+  line-height:1.5;
+}
+
+@media(max-width:480px){
+  h1{font-size:34px}
+  h2{font-size:25px}
+  .grid{gap:10px}
+  .card{padding:18px}
+  .big-number{font-size:52px}
 }
 </style>
+</head>
 
-<section class="irrigation-section" id="smartIrrigation">
+<body>
 
-  <div class="irrigation-title">
-    <h2>💧 Smart Irrigation AI</h2>
-    <span class="ai-badge">AI POWERED</span>
-  </div>
+<div class="app">
 
-  <div class="irrigation-grid">
+<!-- HOME -->
+<section id="home" class="page active">
 
-    <div class="irrigation-card">
-      <div class="icon">🌱</div>
-      <div class="label">Soil Moisture</div>
-      <div class="value" id="soilMoisture">42%</div>
-    </div>
+<header>
+<div class="brand">AGROVERSE AI</div>
+<h1>Good morning, Farmer.</h1>
+<p class="subtitle">Here's the pulse of your farm today.</p>
+</header>
 
-    <div class="irrigation-card">
-      <div class="icon">🌡️</div>
-      <div class="label">Temperature</div>
-      <div class="value" id="irrigationTemp">29°C</div>
-    </div>
+<div class="card">
+<button class="btn secondary" onclick="showPage('farm')">
+View farm summary →
+</button>
+</div>
 
-    <div class="irrigation-card">
-      <div class="icon">🌧️</div>
-      <div class="label">Rain Probability</div>
-      <div class="value" id="rainChance">20%</div>
-    </div>
+<div class="card hero">
+<div class="label">💧 Soil Water</div>
+<div class="big-number" id="homeMoisture">68%</div>
+<div class="status" id="homeWaterStatus">🟢 Soil is Good</div>
+<p class="subtitle" id="homeWaterText">No watering needed</p>
+</div>
 
-    <div class="irrigation-card">
-      <div class="icon">💦</div>
-      <div class="label">Water Required</div>
-      <div class="value" id="waterNeed">Medium</div>
-    </div>
+<div class="grid">
 
-  </div>
+<div class="card stat">
+<div class="icon">🌡️</div>
+<div class="label">Temperature</div>
+<div class="value">24.8°C</div>
+<p class="subtitle">A comfortable day</p>
+</div>
 
-  <div class="irrigation-recommendation">
+<div class="card stat">
+<div class="icon">💧</div>
+<div class="label">Water</div>
+<div class="value good" id="homeWater">Good</div>
+<p class="subtitle">No watering needed</p>
+</div>
 
-    <h3>🤖 AI Recommendation</h3>
+<div class="card stat">
+<div class="icon">🌧️</div>
+<div class="label">Rain</div>
+<div class="value blue">64%</div>
+<p class="subtitle">Rain is expected</p>
+</div>
 
-    <p id="irrigationAdvice">
-      Soil moisture is moderate. Irrigation is recommended today.
-    </p>
+<div class="card stat">
+<div class="icon">☀️</div>
+<div class="label">Sunlight</div>
+<div class="value warning">78%</div>
+<p class="subtitle">Plenty of light today</p>
+</div>
 
-    <p>
-      ⏱️ Best time:
-      <strong id="bestTime">5:30 PM – 6:15 PM</strong>
-    </p>
+</div>
 
-    <p>
-      💧 Suggested duration:
-      <strong id="irrigationDuration">35 minutes</strong>
-    </p>
+<div class="card advice">
+<div class="label">🌾 WHAT TO DO TODAY</div>
+<h2>Today's Farm Advice</h2>
+<p id="homeAdvice">💧 No watering needed today.</p>
+</div>
 
-  </div>
-<div style="margin-top:15px;padding:16px;background:white;border-radius:16px;border:1px solid #dceee2;">
+<div class="section-title">
+<small>WHAT TO KNOW TODAY</small>
+<h2>Farm updates</h2>
+</div>
 
-  <div style="display:flex;justify-content:space-between;align-items:center;">
+<div class="quick" onclick="showPage('water')">
+<div>
+<strong>💧 Water plan</strong>
+<p class="subtitle">Your field does not need water now.</p>
+</div>
+<div class="quick-arrow">›</div>
+</div>
 
-    <div>
-      <strong>🚿 Irrigation Pump</strong>
-      <div id="pumpStatus" style="font-size:13px;color:#777;margin-top:4px;">
-        Pump is OFF
-      </div>
-    </div>
+<div class="quick" onclick="showPage('disease')">
+<div>
+<strong>🛡️ Crop looks healthy</strong>
+<p class="subtitle">No new crop problems found.</p>
+</div>
+<div class="quick-arrow">›</div>
+</div>
 
-    <button id="pumpButton"
-      onclick="togglePump()"
-      style="border:none;padding:11px 18px;border-radius:25px;background:#555;color:white;font-weight:bold;">
-      🔴 OFF
-    </button>
+<div class="quick" onclick="showPage('weather')">
+<div>
+<strong>🌧️ Rain may help tomorrow</strong>
+<p class="subtitle">Rain is expected tomorrow morning.</p>
+</div>
+<div class="quick-arrow">›</div>
+</div>
 
-  </div>
-  <button class="irrigation-button" onclick="runIrrigationAI()">
-    🤖 Run AI Irrigation Analysis
-  </button>
+<div class="section-title">
+<small>MORE HELP</small>
+<h2>Quick links</h2>
+</div>
+
+<div class="card" onclick="showPage('water')">
+<div class="icon">💧</div>
+<h3>Water</h3>
+<p class="subtitle">Open water controls</p>
+</div>
+
+<div class="card" onclick="showPage('weather')">
+<div class="icon">☀️</div>
+<h3>Weather</h3>
+<p class="subtitle">24.8°C · Clear</p>
+</div>
+
+<div class="card" onclick="showPage('disease')">
+<div class="icon">🌿</div>
+<h3>Crop health</h3>
+<p class="subtitle">Healthy · 92%</p>
+</div>
 
 </section>
 
+
+<!-- MY FARM -->
+<section id="farm" class="page">
+
+<header>
+<div class="brand">YOUR FIELDS</div>
+<h1>My Farm</h1>
+<p class="subtitle">See which fields need water.</p>
+<button class="btn" onclick="addField()">＋ Add field</button>
+</header>
+
+<div class="grid">
+
+<div class="card stat">
+<div class="big-number" id="fieldCount">4</div>
+<div class="label">Fields</div>
+</div>
+
+<div class="card stat">
+<div class="big-number good" id="goodCount">2</div>
+<div class="label">Fields Good</div>
+</div>
+
+<div class="card stat">
+<div class="big-number warning" id="checkCount">1</div>
+<div class="label">Fields to Check</div>
+</div>
+
+<div class="card stat">
+<div class="big-number danger" id="waterCount">1</div>
+<div class="label">Needs Water</div>
+</div>
+
+</div>
+
+<div class="section-title">
+<small>YOUR FIELDS</small>
+<h2>Field cards</h2>
+<p class="subtitle">See crop, soil water and status for each field.</p>
+</div>
+
+<div id="fieldList"></div>
+
+<div class="card">
+<div class="label">📍 FARM LOCATION</div>
+<h3>Riverside Fields</h3>
+<p class="subtitle">Your connected farm area</p>
+</div>
+
+</section>
+
+
+<!-- WEATHER -->
+<section id="weather" class="page">
+
+<header>
+<div class="brand">AGROVERSE / WEATHER</div>
+<h1>Weather</h1>
+<p class="subtitle">Plan your farm work around the weather.</p>
+</header>
+
+<div class="card hero">
+<div class="weather-main">
+<div>
+<div class="label">TODAY'S WEATHER</div>
+<div class="weather-temp">24.8°C</div>
+<p class="subtitle">Clear skies today</p>
+</div>
+<div style="font-size:60px">☀️</div>
+</div>
+
+<hr style="border-color:rgba(255,255,255,.1);margin:25px 0">
+
+<div class="grid">
+<div>
+<div class="label">Wind</div>
+<strong>8 km/h</strong>
+</div>
+<div>
+<div class="label">Humidity</div>
+<strong>64%</strong>
+</div>
+<div>
+<div class="label">Rain Chance</div>
+<strong>64%</strong>
+</div>
+</div>
+</div>
+
+<div class="section-title">
+<small>TODAY</small>
+<h2>Next few hours</h2>
+<p class="subtitle">A quick look at the rest of today.</p>
+</div>
+
+<div class="forecast">
+<div class="forecast-card">
+<strong>Now</strong>
+<div class="icon">☀️</div>
+<strong>24.8°</strong>
+<p class="subtitle">18% rain</p>
+</div>
+
+<div class="forecast-card">
+<strong>12:00</strong>
+<div class="icon">☀️</div>
+<strong>27°</strong>
+<p class="subtitle">12% rain</p>
+</div>
+
+<div class="forecast-card">
+<strong>18:00</strong>
+<div class="icon">🌥️</div>
+<strong>22°</strong>
+<p class="subtitle">42% rain</p>
+</div>
+</div>
+
+<div class="card advice" style="margin-top:18px">
+<div class="icon">🌧️</div>
+<h3>Rain is likely. You can delay watering.</h3>
+<p>Wait for rain before watering.</p>
+<hr style="border-color:rgba(255,255,255,.1);margin:20px 0">
+<p>Soil water <strong>68%</strong></p>
+<p>Dry level <strong>40%</strong></p>
+<p>Rain Chance <strong>64%</strong></p>
+<button class="btn secondary" onclick="showPage('water')">
+Open watering →
+</button>
+</div>
+
+<div class="section-title">
+<small>THE WEEK AHEAD</small>
+<h2>Next 5 Days</h2>
+</div>
+
+<div class="forecast">
+
+<div class="forecast-card">
+<strong>Today</strong>
+<div class="icon">☀️</div>
+<strong>25°</strong>
+<p class="subtitle">18% rain</p>
+</div>
+
+<div class="forecast-card">
+<strong>Tue</strong>
+<div class="icon">🌧️</div>
+<strong>22°</strong>
+<p class="subtitle">64% rain</p>
+</div>
+
+<div class="forecast-card">
+<strong>Wed</strong>
+<div class="icon">🌧️</div>
+<strong>21°</strong>
+<p class="subtitle">48% rain</p>
+</div>
+
+<div class="forecast-card">
+<strong>Thu</strong>
+<div class="icon">☀️</div>
+<strong>24°</strong>
+<p class="subtitle">8% rain</p>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- WATER -->
+<section id="water" class="page">
+
+<header>
+<div class="brand">AGROVERSE / WATER</div>
+<h1>💧 Water</h1>
+<p class="subtitle">Check your soil and water your crop.</p>
+</header>
+
+<div class="card">
+<div class="pump">
+<div>
+<strong>Automatic watering</strong>
+<p class="subtitle">AI decides when watering is needed</p>
+</div>
+<button id="autoSwitch" class="switch on" onclick="toggleAuto()">
+<span></span>
+</button>
+</div>
+</div>
+
+<div class="card">
+<div class="label">🌱 CURRENT SOIL WATER</div>
+<div class="big-number" id="waterMoisture">68%</div>
+
+<h2 id="waterDecision" class="good">✅ Water Not Needed</h2>
+<p class="subtitle" id="waterReason">No watering needed.</p>
+
+<div class="card" style="margin-top:20px;background:#071c15">
+<div class="pump">
+<div>
+<div class="label">💧 Water Pump</div>
+<div class="pump-status" id="pumpStatus">OFF</div>
+</div>
+
+<button id="pumpSwitch" class="switch" onclick="manualPump()">
+<span></span>
+</button>
+</div>
+</div>
+
+<div class="grid">
+
+<div class="card" style="margin:0">
+<div class="label">🔴 Dry Level</div>
+<div class="value warning">40%</div>
+</div>
+
+<div class="card" style="margin:0">
+<div class="label">🌧️ Rain Expected</div>
+<div class="value blue">YES</div>
+</div>
+
+</div>
+</div>
+
+<div class="card">
+<div class="label">TODAY'S WATER ADVICE</div>
+<h3 id="waterAdvice">No watering needed today.</h3>
+
+<button class="btn warning-btn" onclick="testDrySoil()">
+🧪 Test Dry Soil
+</button>
+
+<p class="subtitle">
+Agroverse checks soil moisture and waters only when needed.
+</p>
+</div>
+
+<div class="section-title">
+<small>SIMPLE DEMO FLOW</small>
+<h2>Smart watering</h2>
+</div>
+
+<div class="demo">
+<strong class="good">NORMAL</strong>
+<p>🟢 Soil is Good</p>
+<p id="normalDemo">68%</p>
+<p>No watering needed</p>
+</div>
+
+<div class="demo">
+<strong class="danger">TEST DRY SOIL</strong>
+<p>🔴 Soil is Dry</p>
+<p>32%</p>
+<p>Water now is ready</p>
+</div>
+
+<div class="demo">
+<strong class="blue">WATERING</strong>
+<p>💧 Watering...</p>
+<p>32% → 70%</p>
+<p>Pump ON</p>
+</div>
+
+<div class="demo">
+<strong class="good">COMPLETE</strong>
+<p>✅ Watering Complete</p>
+<p>70%</p>
+<p>Pump OFF</p>
+</div>
+
+<div class="section-title">
+<small>WATERING HISTORY</small>
+<h2>Recent updates</h2>
+</div>
+
+<div id="history"></div>
+
+<div class="card">
+<div class="label">MORE CHOICES</div>
+<h3>Change the demo levels</h3>
+
+<label>🔴 Dry level: <span id="dryValue">40%</span></label>
+<input class="slider" type="range" min="20" max="60" value="40"
+oninput="changeDry(this.value)">
+
+<label>🎯 Water enough at: <span id="enoughValue">70%</span></label>
+<input class="slider" type="range" min="60" max="90" value="70"
+oninput="changeEnough(this.value)">
+</div>
+
+<div class="section-title">
+<small>YOUR FIELDS</small>
+<h2>Choose a field</h2>
+</div>
+
+<div id="waterFields"></div>
+
+<div class="card" id="selectedWaterField">
+<h2>North Orchard</h2>
+<p class="subtitle">Watering time</p>
+
+<div style="font-size:35px;margin-top:15px">
+<span id="waterMinutes">20</span>
+<small>min</small>
+</div>
+
+<input class="slider" type="range" min="5" max="60" value="20"
+oninput="document.getElementById('waterMinutes').textContent=this.value">
+
+<button class="btn" onclick="waterSelectedField()">
+💧 Water selected field
+</button>
+</div>
+
+</section>
+
+
+<!-- DISEASE -->
+<section id="disease" class="page">
+
+<header>
+<div class="brand">AGROVERSE / DISEASE</div>
+<h1>🌿 Check My Crop</h1>
+<p class="subtitle">Take a photo of a leaf to check for problems.</p>
+</header>
+
+<div class="card">
+
+<div class="label">📷 LEAF PHOTO</div>
+
+<div class="photo-box" id="photoBox">
+<div class="camera">📷</div>
+<h2>Upload a leaf photo</h2>
+<p class="subtitle">Choose a photo from your device.</p>
+
+<input type="file" accept="image/*" id="leafInput"
+onchange="previewLeaf(event)">
+
+</div>
+
+<button class="btn" onclick="checkLeaf()">
+🔍 Check Leaf
+</button>
+
+<div id="diseaseResult"></div>
+
+</div>
+
+<div class="notice">
+Demo result only — this prototype does not provide a real crop diagnosis.
+</div>
+
+</section>
+
+
+<!-- AI ASSISTANT -->
+<section id="assistant" class="page">
+
+<header>
+<div class="brand">ASK FOR HELP</div>
+<h1>🤖 AI Assistant</h1>
+<p class="subtitle">Ask me anything about your farm.</p>
+</header>
+
+<div class="card">
+<h2>👋 Hello Farmer!</h2>
+<p class="subtitle">
+I can help you with watering, weather, crop problems and daily farm work.
+</p>
+</div>
+
+<div class="section-title">
+<small>ASK A QUESTION</small>
+<h2>Farm Helper</h2>
+</div>
+
+<div class="chat-question" onclick="askAI('water')">
+Should I water my crop?
+</div>
+
+<div class="chat-question" onclick="askAI('rain')">
+Will rain affect my farm?
+</div>
+
+<div class="chat-question" onclick="askAI('leaf')">
+What should I do about leaf problems?
+</div>
+
+<div class="chat-question" onclick="askAI('today')">
+Give me today's farm advice
+</div>
+
+<div class="card">
+<div id="aiAnswer" class="chat-answer">
+👋 Hello Farmer! Choose a question above and I will help.
+</div>
+</div>
+
+</section>
+
+
+<!-- BOTTOM NAV -->
+<nav>
+
+<button class="nav-btn active" data-page="home" onclick="showPage('home')">
+<span>⌂</span>
+Home
+</button>
+
+<button class="nav-btn" data-page="farm" onclick="showPage('farm')">
+<span>♧</span>
+My Farm
+</button>
+
+<button class="nav-btn" data-page="weather" onclick="showPage('weather')">
+<span>☁</span>
+Weather
+</button>
+
+<button class="nav-btn" data-page="water" onclick="showPage('water')">
+<span>♨</span>
+Water
+</button>
+
+<button class="nav-btn" data-page="disease" onclick="showPage('disease')">
+<span>♢</span>
+Disease
+</button>
+
+<button class="nav-btn" data-page="assistant" onclick="showPage('assistant')">
+<span>🤖</span>
+AI Assistant
+</button>
+
+</nav>
+
+</div>
+
+
 <script>
-function runIrrigationAI() {
 
-  const moisture = Math.floor(Math.random() * 31) + 30;
-  const rain = Math.floor(Math.random() * 61) + 10;
-  const temperature = Math.floor(Math.random() * 8) + 27;
+let moisture=68;
+let dryLevel=40;
+let enoughLevel=70;
+let pumpOn=false;
+let automatic=true;
+let selectedField=0;
 
-  document.getElementById("soilMoisture").textContent =
-    moisture + "%";
-
-  document.getElementById("rainChance").textContent =
-    rain + "%";
-
-  document.getElementById("irrigationTemp").textContent =
-    temperature + "°C";
-
-  let advice = "";
-  let water = "";
-  let duration = "";
-
-  if (rain >= 60) {
-
-    advice =
-      "🌧️ Rain probability is high. AI recommends delaying irrigation to save water.";
-
-    water = "Low";
-    duration = "0 minutes";
-
-  } else if (moisture < 40) {
-
-    advice =
-      "⚠️ Soil moisture is low. AI recommends irrigation as soon as possible.";
-
-    water = "High";
-    duration = "45 minutes";
-
-  } else if (moisture < 55) {
-
-    advice =
-      "💧 Soil moisture is moderate. AI recommends controlled irrigation today.";
-
-    water = "Medium";
-    duration = "35 minutes";
-
-  } else {
-
-    advice =
-      "✅ Soil moisture is sufficient. Irrigation can be reduced or skipped.";
-
-    water = "Low";
-    duration = "15 minutes";
-
-  }
-
-  document.getElementById("irrigationAdvice").textContent = advice;
-  document.getElementById("waterNeed").textContent = water;
-  document.getElementById("irrigationDuration").textContent = duration;
-
-  alert("🌾 Agroverse AI irrigation analysis completed!");
+let fields=[
+{
+ name:"North Orchard",
+ crop:"Tomatoes",
+ area:"2.4 ha",
+ moisture:72,
+ status:"Good",
+ time:"Today, 18:30"
+},
+{
+ name:"Lower Meadow",
+ crop:"Lettuce",
+ area:"1.8 ha",
+ moisture:38,
+ status:"Needs Water",
+ time:"Tomorrow, 06:15"
+},
+{
+ name:"East Terrace",
+ crop:"Peppers",
+ area:"1.6 ha",
+ moisture:67,
+ status:"Good",
+ time:"Today, 19:00"
+},
+{
+ name:"Nursery House",
+ crop:"Seedlings",
+ area:"0.6 ha",
+ moisture:78,
+ status:"Optimal",
+ time:"Thursday, 07:00"
 }
-      function togglePump() {
+];
 
-  const button = document.getElementById("pumpButton");
-  const status = document.getElementById("pumpStatus");
+function showPage(page){
 
-  if (button.textContent.includes("OFF")) {
+document.querySelectorAll(".page").forEach(p=>{
+p.classList.remove("active");
+});
 
-    button.textContent = "🟢 ON";
-    button.style.background = "#16803c";
-    status.textContent = "Pump is ON — irrigation running";
+document.getElementById(page).classList.add("active");
 
-  } else {
+document.querySelectorAll(".nav-btn").forEach(btn=>{
+btn.classList.remove("active");
 
-    button.textContent = "🔴 OFF";
-    button.style.background = "#555";
-    status.textContent = "Pump is OFF";
+if(btn.dataset.page===page){
+btn.classList.add("active");
+}
+});
 
-  }
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+if(page==="farm") renderFields();
+if(page==="water") renderWaterFields();
+}
+
+
+function updateWater(){
+
+document.getElementById("waterMoisture").textContent=moisture+"%";
+document.getElementById("homeMoisture").textContent=moisture+"%";
+
+let status=document.getElementById("waterDecision");
+let reason=document.getElementById("waterReason");
+let advice=document.getElementById("waterAdvice");
+
+if(moisture<dryLevel){
+
+status.textContent="🔴 Water Needed";
+status.className="danger";
+reason.textContent="Soil moisture is below the dry level.";
+advice.textContent="Watering is recommended now.";
+
+document.getElementById("homeWaterStatus").textContent="🔴 Soil is Dry";
+document.getElementById("homeWaterText").textContent="Watering may be needed";
+document.getElementById("homeAdvice").textContent="💧 Soil is dry. Check the Water page.";
+
+}else{
+
+status.textContent="✅ Water Not Needed";
+status.className="good";
+
+reason.textContent="Soil moisture is sufficient.";
+advice.textContent="No watering needed today.";
+
+document.getElementById("homeWaterStatus").textContent="🟢 Soil is Good";
+document.getElementById("homeWaterText").textContent="No watering needed";
+document.getElementById("homeAdvice").textContent="💧 No watering needed today.";
+}
+
+}
+
+
+function toggleAuto(){
+
+automatic=!automatic;
+
+document.getElementById("autoSwitch")
+.classList.toggle("on",automatic);
+
+}
+
+
+function manualPump(){
+
+if(moisture>=dryLevel && !pumpOn){
+
+alert("💧 Soil moisture is already sufficient. Agroverse recommends keeping the pump OFF.");
+
+return;
+}
+
+pumpOn=!pumpOn;
+
+updatePumpUI();
+
+}
+
+
+function updatePumpUI(){
+
+let sw=document.getElementById("pumpSwitch");
+let status=document.getElementById("pumpStatus");
+
+sw.classList.toggle("on",pumpOn);
+
+status.textContent=pumpOn
+?"ON — Watering"
+:"OFF";
+
+if(pumpOn){
+
+status.className="pump-status good";
+
+}else{
+
+status.className="pump-status";
+
+}
+
+}
+
+
+function testDrySoil(){
+
+moisture=32;
+
+updateWater();
+
+alert("🧪 Demo: Soil moisture is now 32%. Watering is required.");
+
+if(automatic){
+
+startSmartWatering();
+
+}
+
+}
+
+
+function startSmartWatering(){
+
+if(moisture>=dryLevel){
+
+return;
+}
+
+pumpOn=true;
+updatePumpUI();
+
+addHistory("Pump ON — watering started");
+
+setTimeout(()=>{
+
+moisture=enoughLevel;
+
+pumpOn=false;
+
+updatePumpUI();
+updateWater();
+
+addHistory("Watering complete — Pump OFF");
+
+alert("✅ Watering completed. Soil moisture reached "+enoughLevel+"%.");
+
+},4000);
+
+}
+
+
+function waterSelectedField(){
+
+let field=fields[selectedField];
+
+if(field.moisture>=dryLevel){
+
+alert("💧 "+field.name+" does not need watering right now.");
+
+return;
+}
+
+field.moisture=enoughLevel;
+field.status="Good";
+
+addHistory("Watered "+field.name+" — soil reached "+enoughLevel+"%");
+
+renderFields();
+renderWaterFields();
+
+alert("💧 "+field.name+" watered successfully.");
+
+}
+
+
+function addHistory(text){
+
+let history=document.getElementById("history");
+
+let item=document.createElement("div");
+
+item.className="history-item";
+
+item.innerHTML="🔵 "+text+
+"<br><small>"+new Date().toLocaleTimeString()+" · Agroverse AI</small>";
+
+history.prepend(item);
+
+}
+
+
+function changeDry(value){
+
+dryLevel=parseInt(value);
+
+document.getElementById("dryValue").textContent=value+"%";
+
+updateWater();
+
+}
+
+
+function changeEnough(value){
+
+enoughLevel=parseInt(value);
+
+document.getElementById("enoughValue").textContent=value+"%";
+
+}
+
+
+function renderFields(){
+
+let list=document.getElementById("fieldList");
+
+list.innerHTML="";
+
+let good=0;
+let check=0;
+let needs=0;
+
+fields.forEach((field,index)=>{
+
+if(field.moisture>=60) good++;
+else if(field.moisture>=40) check++;
+else needs++;
+
+let div=document.createElement("div");
+
+div.className="field";
+
+div.innerHTML=`
+
+<div class="field-top">
+
+<div>
+<div class="field-name">📍 ${field.name}</div>
+<div class="field-info">🌱 ${field.crop}</div>
+</div>
+
+<span class="status ${
+field.moisture<40
+?"danger"
+:"good"
+}">
+${field.moisture<40?"Needs Water":field.status}
+</span>
+
+</div>
+
+<div class="grid" style="margin-top:15px">
+
+<div>
+<div class="label">📏 Field area</div>
+<strong>${field.area}</strong>
+</div>
+
+<div>
+<div class="label">💧 Soil water</div>
+<strong>${field.moisture}%</strong>
+</div>
+
+</div>
+
+<div class="progress">
+<span style="width:${field.moisture}%"></span>
+</div>
+
+<div class="field-actions">
+
+<button class="small-btn"
+onclick="selectField(${index})">
+View Field
+</button>
+
+<button class="small-btn"
+onclick="waterField(${index})">
+💧 Water
+</button>
+
+</div>
+
+`;
+
+list.appendChild(div);
+
+});
+
+document.getElementById("fieldCount").textContent=fields.length;
+document.getElementById("goodCount").textContent=good;
+document.getElementById("checkCount").textContent=check;
+document.getElementById("waterCount").textContent=needs;
+
+}
+
+
+function selectField(index){
+
+selectedField=index;
+
+let field=fields[index];
+
+document.getElementById("selectedWaterField").querySelector("h2")
+.textContent=field.name;
+
+showPage("water");
+
+renderWaterFields();
+
+}
+
+
+function waterField(index){
+
+selectedField=index;
+
+showPage("water");
+
+setTimeout(()=>{
+
+waterSelectedField();
+
+},300);
+
+}
+
+
+function renderWaterFields(){
+
+let list=document.getElementById("waterFields");
+
+list.innerHTML="";
+
+fields.forEach((field,index)=>{
+
+let div=document.createElement("div");
+
+div.className="field "+
+(index===selectedField?"active":"");
+
+div.onclick=()=>{
+
+selectedField=index;
+
+document.getElementById("selectedWaterField")
+.querySelector("h2")
+.textContent=field.name;
+
+renderWaterFields();
+
+};
+
+div.innerHTML=`
+
+<div class="field-top">
+
+<div>
+<div class="field-name">💧 ${field.name}</div>
+<div class="field-info">
+${field.crop} · ${field.moisture}% soil water
+</div>
+</div>
+
+<strong class="${
+field.moisture<dryLevel
+?"danger"
+:"good"
+}">
+${field.moisture<dryLevel
+?"Needs Water"
+:"Scheduled"}
+</strong>
+
+</div>
+
+`;
+
+list.appendChild(div);
+
+});
+
+}
+
+
+function addField(){
+
+let name=prompt("Enter field name:");
+
+if(!name) return;
+
+let crop=prompt("Enter crop:");
+
+if(!crop) return;
+
+let area=prompt("Enter field area:");
+
+if(!area) return;
+
+fields.push({
+
+name:name,
+crop:crop,
+area:area+" ha",
+moisture:50,
+status:"Check",
+time:"Not scheduled"
+
+});
+
+renderFields();
+
+alert("🌱 New field added successfully!");
+
+}
+
+
+function previewLeaf(event){
+
+let file=event.target.files[0];
+
+if(!file) return;
+
+let reader=new FileReader();
+
+reader.onload=function(e){
+
+document.getElementById("photoBox").innerHTML=`
+
+<img src="${e.target.result}"
+style="max-width:100%;max-height:220px;border-radius:15px">
+
+<p class="subtitle">${file.name}</p>
+
+`;
+
+};
+
+reader.readAsDataURL(file);
+
+}
+
+
+function checkLeaf(){
+
+let input=document.getElementById("leafInput");
+
+if(!input.files.length){
+
+alert("📷 Please upload a leaf photo first.");
+
+return;
+
+}
+
+document.getElementById("diseaseResult").innerHTML=`
+
+<div class="card" style="margin-top:18px">
+
+<h3 class="good">🌿 Demo Result: Crop Looks Healthy</h3>
+
+<p class="subtitle">
+No obvious problem detected in this prototype image check.
+</p>
+
+<div class="notice">
+For a real disease detector, this module can later be connected to an AI image model.
+</div>
+
+</div>
+
+`;
+
+}
+
+
+function askAI(type){
+
+let answer="";
+
+if(type==="water"){
+
+answer=`
+💧 <strong>Water advice</strong><br><br>
+Your demo soil moisture is ${moisture}%. 
+The dry level is ${dryLevel}%. 
+${
+moisture<dryLevel
+?"Watering is recommended now."
+:"Watering is not currently needed."
+}
+`;
+
+}
+
+if(type==="rain"){
+
+answer=`
+🌧️ <strong>Rain advice</strong><br><br>
+Rain probability is currently around 64%.
+Because rain is expected, avoid unnecessary irrigation when the soil already has enough moisture.
+`;
+
+}
+
+if(type==="leaf"){
+
+answer=`
+🌿 <strong>Crop advice</strong><br><br>
+Take a clear photo of the affected leaf and use the Disease section.
+Look for changes in colour, spots, curling, holes or unusual growth.
+`;
+
+}
+
+if(type==="today"){
+
+answer=`
+🌾 <strong>Today's farm advice</strong><br><br>
+Check soil moisture, inspect the crop, watch the rain forecast and avoid watering fields that already have sufficient moisture.
+`;
+
+}
+
+document.getElementById("aiAnswer").innerHTML=answer;
+
+}
+
+
+updateWater();
+renderFields();
+renderWaterFields();
+
+addHistory("Water page ready");
+
 </script>
-</body>
-<\html>
 
-      
-    
-  
+</body>
+</html>
