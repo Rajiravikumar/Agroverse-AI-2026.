@@ -1,4 +1,4 @@
-      <!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -1099,7 +1099,24 @@ button>
     </p>
 
   </div>
+<div style="margin-top:15px;padding:16px;background:white;border-radius:16px;border:1px solid #dceee2;">
 
+  <div style="display:flex;justify-content:space-between;align-items:center;">
+
+    <div>
+      <strong>🚿 Irrigation Pump</strong>
+      <div id="pumpStatus" style="font-size:13px;color:#777;margin-top:4px;">
+        Pump is OFF
+      </div>
+    </div>
+
+    <button id="pumpButton"
+      onclick="togglePump()"
+      style="border:none;padding:11px 18px;border-radius:25px;background:#555;color:white;font-weight:bold;">
+      🔴 OFF
+    </button>
+
+  </div>
   <button class="irrigation-button" onclick="runIrrigationAI()">
     🤖 Run AI Irrigation Analysis
   </button>
@@ -1166,6 +1183,24 @@ function runIrrigationAI() {
 
   alert("🌾 Agroverse AI irrigation analysis completed!");
 }
+      function togglePump() {
+
+  const button = document.getElementById("pumpButton");
+  const status = document.getElementById("pumpStatus");
+
+  if (button.textContent.includes("OFF")) {
+
+    button.textContent = "🟢 ON";
+    button.style.background = "#16803c";
+    status.textContent = "Pump is ON — irrigation running";
+
+  } else {
+
+    button.textContent = "🔴 OFF";
+    button.style.background = "#555";
+    status.textContent = "Pump is OFF";
+
+  }
 </script>
 </body>
 <\html>
