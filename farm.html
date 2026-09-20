@@ -3,340 +3,406 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Agroverse AI - My Farm</title>
+<title>My Farms - Agroverse AI</title>
 
 <style>
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
 }
 
 body {
-  background: #f4f8f3;
-  color: #183b20;
+    margin: 0;
+    background: #f4f8f4;
+    color: #17351f;
 }
 
-.app {
-  max-width: 480px;
-  margin: auto;
-  min-height: 100vh;
-  padding-bottom: 30px;
+.header {
+    background: linear-gradient(135deg, #087f3d, #20b45b);
+    color: white;
+    padding: 25px 20px;
+    border-radius: 0 0 28px 28px;
 }
 
-header {
-  background: linear-gradient(135deg, #176b35, #42a85f);
-  color: white;
-  padding: 25px 20px;
-  border-radius: 0 0 28px 28px;
+.header h1 {
+    margin: 0;
+    font-size: 28px;
 }
 
-.back {
-  border: none;
-  background: rgba(255,255,255,.18);
-  color: white;
-  padding: 9px 14px;
-  border-radius: 12px;
-  margin-bottom: 18px;
+.header p {
+    margin: 8px 0 0;
+    opacity: 0.9;
 }
 
-header h1 {
-  font-size: 27px;
+.container {
+    padding: 20px;
+    max-width: 700px;
+    margin: auto;
 }
 
-header p {
-  margin-top: 6px;
-  font-size: 13px;
-  opacity: .9;
+.add-button {
+    width: 100%;
+    border: none;
+    background: #087f3d;
+    color: white;
+    padding: 16px;
+    border-radius: 16px;
+    font-size: 17px;
+    font-weight: bold;
+    margin-bottom: 20px;
 }
 
-main {
-  padding: 20px;
+.farm-card {
+    background: white;
+    padding: 18px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
 }
 
-.card {
-  background: white;
-  border-radius: 20px;
-  padding: 20px;
-  box-shadow: 0 5px 18px rgba(0,0,0,.07);
-  margin-bottom: 16px;
+.farm-card h2 {
+    margin: 0 0 12px;
+    color: #087f3d;
 }
 
-.card h2 {
-  font-size: 19px;
-  margin-bottom: 16px;
+.detail {
+    display: flex;
+    justify-content: space-between;
+    padding: 7px 0;
+    border-bottom: 1px solid #eee;
 }
 
-label {
-  display: block;
-  font-size: 13px;
-  font-weight: bold;
-  margin-bottom: 7px;
-  color: #38533e;
+.detail:last-child {
+    border-bottom: none;
 }
 
-input, select {
-  width: 100%;
-  padding: 13px;
-  border: 1px solid #d8e3d8;
-  border-radius: 12px;
-  background: #f9fcf8;
-  font-size: 14px;
-  margin-bottom: 15px;
-  outline: none;
+.actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
 }
 
-input:focus, select:focus {
-  border-color: #42a85f;
+.edit-btn,
+.delete-btn {
+    flex: 1;
+    border: none;
+    padding: 11px;
+    border-radius: 12px;
+    font-weight: bold;
 }
 
-.row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+.edit-btn {
+    background: #e4f5e9;
+    color: #087f3d;
 }
 
-.save {
-  width: 100%;
-  border: none;
-  background: #176b35;
-  color: white;
-  padding: 15px;
-  border-radius: 14px;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
+.delete-btn {
+    background: #ffe7e7;
+    color: #c62828;
 }
 
-.status {
-  display: none;
-  background: #e4f6e5;
-  color: #176b35;
-  padding: 13px;
-  border-radius: 12px;
-  margin-top: 12px;
-  text-align: center;
-  font-size: 13px;
+.empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: #777;
 }
 
-.preview {
-  background: #eaf6e8;
-  border-radius: 18px;
-  padding: 17px;
+.form-box {
+    display: none;
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
 }
 
-.preview-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 9px 0;
-  border-bottom: 1px solid #d5e7d2;
-  font-size: 13px;
+.form-box h2 {
+    margin-top: 0;
+    color: #087f3d;
 }
 
-.preview-item:last-child {
-  border-bottom: none;
+input,
+select {
+    width: 100%;
+    padding: 13px;
+    margin: 7px 0 14px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    font-size: 16px;
 }
 
-.preview-item span {
-  color: #708073;
+.save-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 13px;
+    background: #087f3d;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.cancel-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 13px;
+    background: #eee;
+    margin-top: 8px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="app">
-
-<header>
-  <button class="back" onclick="history.back()">← Back</button>
-  <h1>🌾 My Farm</h1>
-  <p>Tell Agroverse AI about your farm</p>
-</header>
-
-<main>
-
-<div class="card">
-  <h2>👨‍🌾 Farm Details</h2>
-
-  <label>Farmer Name</label>
-  <input id="farmer" type="text" placeholder="Enter your name">
-
-  <label>Crop</label>
-  <select id="crop">
-    <option value="">Select crop</option>
-    <option>Paddy</option>
-    <option>Maize</option>
-    <option>Groundnut</option>
-    <option>Sugarcane</option>
-    <option>Cotton</option>
-    <option>Tomato</option>
-    <option>Banana</option>
-    <option>Other</option>
-  </select>
-
-  <div class="row">
-    <div>
-      <label>Farm Area</label>
-      <input id="area" type="number" placeholder="e.g. 2.5">
-    </div>
-
-    <div>
-      <label>Unit</label>
-      <select id="unit">
-        <option>Acres</option>
-        <option>Hectares</option>
-      </select>
-    </div>
-  </div>
-
-  <label>Soil Type</label>
-  <select id="soil">
-    <option value="">Select soil</option>
-    <option>Clay Loam</option>
-    <option>Sandy Loam</option>
-    <option>Loamy Soil</option>
-    <option>Black Soil</option>
-    <option>Red Soil</option>
-    <option>Alluvial Soil</option>
-  </select>
-
-  <label>Sowing Date</label>
-  <input id="date" type="date">
-
-  <label>Irrigation Method</label>
-  <select id="irrigation">
-    <option value="">Select method</option>
-    <option>Drip Irrigation</option>
-    <option>Sprinkler</option>
-    <option>Flood Irrigation</option>
-    <option>Rainfed</option>
-    <option>Other</option>
-  </select>
-
-  <label>Farm Location</label>
-  <input id="location" type="text" placeholder="Village / District">
-
-  <button class="save" onclick="saveFarm()">
-    💾 Save My Farm
-  </button>
-
-  <div class="status" id="status">
-    ✅ Farm details saved successfully!
-  </div>
+<div class="header">
+    <h1>🌾 My Farms</h1>
+    <p>Manage all your farms in one place</p>
 </div>
 
-<div class="card">
-  <h2>📋 Farm Summary</h2>
+<div class="container">
 
-  <div class="preview">
+    <button class="add-button" onclick="showForm()">
+        ➕ Add New Farm
+    </button>
 
-    <div class="preview-item">
-      <span>Farmer</span>
-      <strong id="pFarmer">Not added</strong>
+    <div class="form-box" id="farmForm">
+
+        <h2 id="formTitle">🌱 Add New Farm</h2>
+
+        <input id="farmName" placeholder="Farm name (Example: North Farm)">
+
+        <select id="crop">
+            <option value="">Select Crop</option>
+            <option>Paddy</option>
+            <option>Wheat</option>
+            <option>Sugarcane</option>
+            <option>Groundnut</option>
+            <option>Maize</option>
+            <option>Cotton</option>
+            <option>Tomato</option>
+            <option>Other</option>
+        </select>
+
+        <input id="area" type="number" placeholder="Farm area (acres)">
+
+        <select id="soil">
+            <option value="">Select Soil Type</option>
+            <option>Clay Loam</option>
+            <option>Red Soil</option>
+            <option>Black Soil</option>
+            <option>Alluvial Soil</option>
+            <option>Sandy Soil</option>
+            <option>Other</option>
+        </select>
+
+        <select id="stage">
+            <option value="">Crop Stage</option>
+            <option>Seedling</option>
+            <option>Vegetative</option>
+            <option>Flowering</option>
+            <option>Fruiting</option>
+            <option>Harvesting</option>
+        </select>
+
+        <input id="location" placeholder="Farm location">
+
+        <button class="save-btn" onclick="saveFarm()">
+            💾 Save Farm
+        </button>
+
+        <button class="cancel-btn" onclick="hideForm()">
+            Cancel
+        </button>
+
     </div>
 
-    <div class="preview-item">
-      <span>Crop</span>
-      <strong id="pCrop">Not added</strong>
-    </div>
-
-    <div class="preview-item">
-      <span>Area</span>
-      <strong id="pArea">Not added</strong>
-    </div>
-
-    <div class="preview-item">
-      <span>Soil</span>
-      <strong id="pSoil">Not added</strong>
-    </div>
-
-    <div class="preview-item">
-      <span>Irrigation</span>
-      <strong id="pIrrigation">Not added</strong>
-    </div>
-
-    <div class="preview-item">
-      <span>Location</span>
-      <strong id="pLocation">Not added</strong>
-    </div>
-
-  </div>
-</div>
-
-</main>
+    <div id="farmList"></div>
 
 </div>
 
 <script>
 
+let farms = JSON.parse(localStorage.getItem("agroverseFarms")) || [];
+let editingIndex = -1;
+
+function showForm(index = -1) {
+
+    editingIndex = index;
+
+    document.getElementById("farmForm").style.display = "block";
+
+    if (index >= 0) {
+
+        let farm = farms[index];
+
+        document.getElementById("formTitle").innerText = "✏️ Edit Farm";
+
+        document.getElementById("farmName").value = farm.name;
+        document.getElementById("crop").value = farm.crop;
+        document.getElementById("area").value = farm.area;
+        document.getElementById("soil").value = farm.soil;
+        document.getElementById("stage").value = farm.stage;
+        document.getElementById("location").value = farm.location;
+
+    } else {
+
+        document.getElementById("formTitle").innerText = "🌱 Add New Farm";
+
+        clearForm();
+    }
+}
+
+function hideForm() {
+
+    document.getElementById("farmForm").style.display = "none";
+
+    clearForm();
+
+    editingIndex = -1;
+}
+
+function clearForm() {
+
+    document.getElementById("farmName").value = "";
+    document.getElementById("crop").value = "";
+    document.getElementById("area").value = "";
+    document.getElementById("soil").value = "";
+    document.getElementById("stage").value = "";
+    document.getElementById("location").value = "";
+}
+
 function saveFarm() {
 
-  const data = {
-    farmer: document.getElementById("farmer").value,
-    crop: document.getElementById("crop").value,
-    area: document.getElementById("area").value,
-    unit: document.getElementById("unit").value,
-    soil: document.getElementById("soil").value,
-    date: document.getElementById("date").value,
-    irrigation: document.getElementById("irrigation").value,
-    location: document.getElementById("location").value
-  };
+    let name = document.getElementById("farmName").value.trim();
+    let crop = document.getElementById("crop").value;
+    let area = document.getElementById("area").value;
+    let soil = document.getElementById("soil").value;
+    let stage = document.getElementById("stage").value;
+    let location = document.getElementById("location").value.trim();
 
-  localStorage.setItem("agroverseFarm", JSON.stringify(data));
+    if (!name || !crop || !area || !soil || !stage || !location) {
 
-  showFarm(data);
+        alert("Please fill all farm details.");
 
-  document.getElementById("status").style.display = "block";
+        return;
+    }
 
-  setTimeout(function() {
-    document.getElementById("status").style.display = "none";
-  }, 3000);
+    let farm = {
+        name: name,
+        crop: crop,
+        area: area,
+        soil: soil,
+        stage: stage,
+        location: location
+    };
+
+    if (editingIndex === -1) {
+
+        farms.push(farm);
+
+    } else {
+
+        farms[editingIndex] = farm;
+    }
+
+    localStorage.setItem(
+        "agroverseFarms",
+        JSON.stringify(farms)
+    );
+
+    hideForm();
+
+    displayFarms();
 }
 
-function showFarm(data) {
+function displayFarms() {
 
-  document.getElementById("pFarmer").innerText =
-    data.farmer || "Not added";
+    let list = document.getElementById("farmList");
 
-  document.getElementById("pCrop").innerText =
-    data.crop || "Not added";
+    list.innerHTML = "";
 
-  document.getElementById("pArea").innerText =
-    data.area ? data.area + " " + data.unit : "Not added";
+    if (farms.length === 0) {
 
-  document.getElementById("pSoil").innerText =
-    data.soil || "Not added";
+        list.innerHTML = `
+            <div class="empty">
+                <div style="font-size:50px;">🌱</div>
+                <h3>No farms added yet</h3>
+                <p>Add your first farm to start managing it with Agroverse AI.</p>
+            </div>
+        `;
 
-  document.getElementById("pIrrigation").innerText =
-    data.irrigation || "Not added";
+        return;
+    }
 
-  document.getElementById("pLocation").innerText =
-    data.location || "Not added";
+    farms.forEach((farm, index) => {
+
+        list.innerHTML += `
+
+            <div class="farm-card">
+
+                <h2>🌾 ${farm.name}</h2>
+
+                <div class="detail">
+                    <span>🌱 Crop</span>
+                    <strong>${farm.crop}</strong>
+                </div>
+
+                <div class="detail">
+                    <span>📐 Area</span>
+                    <strong>${farm.area} acres</strong>
+                </div>
+
+                <div class="detail">
+                    <span>🪨 Soil</span>
+                    <strong>${farm.soil}</strong>
+                </div>
+
+                <div class="detail">
+                    <span>🌿 Crop Stage</span>
+                    <strong>${farm.stage}</strong>
+                </div>
+
+                <div class="detail">
+                    <span>📍 Location</span>
+                    <strong>${farm.location}</strong>
+                </div>
+
+                <div class="actions">
+
+                    <button class="edit-btn"
+                        onclick="showForm(${index})">
+                        ✏️ Edit
+                    </button>
+
+                    <button class="delete-btn"
+                        onclick="deleteFarm(${index})">
+                        🗑️ Delete
+                    </button>
+
+                </div>
+
+            </div>
+        `;
+    });
 }
 
-function loadFarm() {
+function deleteFarm(index) {
 
-  const saved = localStorage.getItem("agroverseFarm");
+    if (confirm("Delete this farm?")) {
 
-  if (saved) {
+        farms.splice(index, 1);
 
-    const data = JSON.parse(saved);
+        localStorage.setItem(
+            "agroverseFarms",
+            JSON.stringify(farms)
+        );
 
-    document.getElementById("farmer").value = data.farmer || "";
-    document.getElementById("crop").value = data.crop || "";
-    document.getElementById("area").value = data.area || "";
-    document.getElementById("unit").value = data.unit || "Acres";
-    document.getElementById("soil").value = data.soil || "";
-    document.getElementById("date").value = data.date || "";
-    document.getElementById("irrigation").value = data.irrigation || "";
-    document.getElementById("location").value = data.location || "";
-
-    showFarm(data);
-  }
+        displayFarms();
+    }
 }
 
-loadFarm();
+displayFarms();
 
 </script>
 
