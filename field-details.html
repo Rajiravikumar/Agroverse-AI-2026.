@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agroverse AI - Field Details</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:#071b14;
+  color:#eef8ef;
+  min-height:100vh;
+}
+
+.container{
+  max-width:520px;
+  margin:auto;
+  padding:22px 18px 40px;
+}
+
+.top{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  margin-bottom:28px;
+}
+
+.back{
+  background:#102d22;
+  border:1px solid #315442;
+  color:white;
+  border-radius:14px;
+  padding:12px 16px;
+  font-size:20px;
+  cursor:pointer;
+}
+
+.label{
+  color:#65e6aa;
+  font-size:12px;
+  letter-spacing:3px;
+  margin-bottom:8px;
+}
+
+h1{
+  font-size:32px;
+  margin-bottom:8px;
+}
+
+.subtitle{
+  color:#91a89e;
+  font-size:16px;
+  line-height:1.5;
+}
+
+.card{
+  background:#0d2920;
+  border:1px solid #234638;
+  border-radius:22px;
+  padding:20px;
+  margin-top:20px;
+}
+
+.section-title{
+  color:#7af0b6;
+  font-size:14px;
+  letter-spacing:2px;
+  margin-bottom:18px;
+}
+
+.field{
+  margin-bottom:17px;
+}
+
+label{
+  display:block;
+  color:#b9c9c0;
+  margin-bottom:8px;
+  font-size:14px;
+}
+
+input,select,textarea{
+  width:100%;
+  padding:14px;
+  border-radius:13px;
+  border:1px solid #315442;
+  background:#071b14;
+  color:white;
+  font-size:16px;
+  outline:none;
+}
+
+input:focus,select:focus,textarea:focus{
+  border-color:#5ee6a6;
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.save{
+  width:100%;
+  border:0;
+  border-radius:15px;
+  padding:17px;
+  margin-top:10px;
+  background:#55dfa0;
+  color:#062016;
+  font-size:17px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.note{
+  text-align:center;
+  color:#82988e;
+  font-size:13px;
+  margin-top:15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="top">
+    <button class="back" onclick="history.back()">←</button>
+    <div>
+      <div class="label">AGROVERSE / MY FARM</div>
+      <h1>Add New Field</h1>
+    </div>
+  </div>
+
+  <p class="subtitle">
+    Tell Agroverse AI about your field so it can give better crop, weather and watering advice.
+  </p>
+
+  <div class="card">
+
+    <div class="section-title">🌱 CROP DETAILS</div>
+
+    <div class="field">
+      <label>Field Name</label>
+      <input id="fieldName" placeholder="Example: North Orchard">
+    </div>
+
+    <div class="field">
+      <label>Crop Name</label>
+      <input id="cropName" placeholder="Example: Tomato">
+    </div>
+
+    <div class="field">
+      <label>Crop Stage</label>
+      <select id="cropStage">
+        <option value="">Select crop stage</option>
+        <option>Seedling</option>
+        <option>Vegetative</option>
+        <option>Flowering</option>
+        <option>Fruiting</option>
+        <option>Harvesting</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Crop Variety</label>
+      <input id="variety" placeholder="Example: PKM-1">
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <div class="section-title">🪨 FIELD & SOIL</div>
+
+    <div class="grid">
+
+      <div class="field">
+        <label>Field Area</label>
+        <input id="area" type="number" placeholder="2.5">
+      </div>
+
+      <div class="field">
+        <label>Unit</label>
+        <select id="unit">
+          <option>Acres</option>
+          <option>Hectares</option>
+          <option>Cents</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="field">
+      <label>Soil Type</label>
+      <select id="soil">
+        <option value="">Select soil type</option>
+        <option>Black Soil</option>
+        <option>Red Soil</option>
+        <option>Alluvial Soil</option>
+        <option>Sandy Soil</option>
+        <option>Clay Soil</option>
+        <option>Loamy Soil</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Current Soil Moisture (%)</label>
+      <input id="moisture" type="number" min="0" max="100" placeholder="Example: 68">
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <div class="section-title">💧 WATER & DATES</div>
+
+    <div class="field">
+      <label>Irrigation Method</label>
+      <select id="irrigation">
+        <option value="">Select irrigation method</option>
+        <option>Drip Irrigation</option>
+        <option>Sprinkler</option>
+        <option>Flood Irrigation</option>
+        <option>Rainfed</option>
+      </select>
+    </div>
+
+    <div class="grid">
+
+      <div class="field">
+        <label>Sowing Date</label>
+        <input id="sowingDate" type="date">
+      </div>
+
+      <div class="field">
+        <label>Expected Harvest</label>
+        <input id="harvestDate" type="date">
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <div class="section-title">📍 LOCATION</div>
+
+    <div class="field">
+      <label>Village / Location</label>
+      <input id="location" placeholder="Example: Coimbatore">
+    </div>
+
+    <div class="field">
+      <label>Additional Notes</label>
+      <textarea id="notes" placeholder="Anything Agroverse should know about this field..."></textarea>
+    </div>
+
+    <button class="save" onclick="saveField()">
+      🌱 Save Field
+    </button>
+
+    <p class="note">
+      Your field details will be used by Agroverse AI for personalized farm advice.
+    </p>
+
+  </div>
+
+</div>
+
+<script>
+
+function saveField(){
+
+  const field = {
+    id: Date.now(),
+    fieldName: document.getElementById("fieldName").value.trim(),
+    cropName: document.getElementById("cropName").value.trim(),
+    cropStage: document.getElementById("cropStage").value,
+    variety: document.getElementById("variety").value.trim(),
+    area: document.getElementById("area").value,
+    unit: document.getElementById("unit").value,
+    soil: document.getElementById("soil").value,
+    moisture: document.getElementById("moisture").value,
+    irrigation: document.getElementById("irrigation").value,
+    sowingDate: document.getElementById("sowingDate").value,
+    harvestDate: document.getElementById("harvestDate").value,
+    location: document.getElementById("location").value.trim(),
+    notes: document.getElementById("notes").value.trim()
+  };
+
+  if(!field.fieldName || !field.cropName || !field.cropStage){
+    alert("Please enter Field Name, Crop Name and Crop Stage.");
+    return;
+  }
+
+  let fields = JSON.parse(localStorage.getItem("agroverseFields") || "[]");
+
+  fields.push(field);
+
+  localStorage.setItem("agroverseFields", JSON.stringify(fields));
+
+  alert("🌱 Field saved successfully!");
+
+  window.location.href = "index.html";
+
+}
+
+</script>
+
+</body>
+</html>
