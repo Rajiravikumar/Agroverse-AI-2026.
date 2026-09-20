@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b3d2e">
+<title>Agroverse AI - Farmer Assistant</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f3f8f4;
+  color: #18352b;
+}
+
+.app {
+  max-width: 900px;
+  margin: auto;
+  min-height: 100vh;
+  background: #f8fbf9;
+  padding-bottom: 90px;
+}
+
+/* HEADER */
+.header {
+  background: linear-gradient(135deg, #0b3d2e, #176b4d);
+  color: white;
+  padding: 22px 18px;
+  border-radius: 0 0 25px 25px;
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.back-btn {
+  border: none;
+  background: rgba(255,255,255,0.15);
+  color: white;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.header h1 {
+  font-size: 23px;
+}
+
+.header p {
+  margin-top: 8px;
+  opacity: 0.85;
+  font-size: 14px;
+}
+
+/* MAIN */
+.main {
+  padding: 18px;
+}
+
+/* AI CARD */
+.ai-card {
+  background: white;
+  border-radius: 22px;
+  padding: 16px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.language-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: bold;
+}
+
+#language {
+  padding: 9px 12px;
+  border: 1px solid #d7e6dc;
+  border-radius: 12px;
+  background: #f6faf7;
+  color: #18352b;
+  font-size: 14px;
+}
+
+.clear-btn {
+  border: none;
+  background: #f1f5f2;
+  padding: 9px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+/* STATUS */
+.status {
+  background: #edf8f1;
+  color: #176b4d;
+  border-radius: 14px;
+  padding: 11px;
+  font-size: 13px;
+  margin-bottom: 14px;
+}
+
+/* CHAT */
+.chat {
+  height: 430px;
+  overflow-y: auto;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  scroll-behavior: smooth;
+}
+
+.message {
+  display: flex;
+  width: 100%;
+}
+
+.message.user {
+  justify-content: flex-end;
+}
+
+.message.ai {
+  justify-content: flex-start;
+}
+
+.bubble {
+  max-width: 82%;
+  padding: 12px 14px;
+  border-radius: 18px;
+  line-height: 1.5;
+  font-size: 14px;
+  white-space: pre-line;
+}
+
+.user .bubble {
+  background: #176b4d;
+  color: white;
+  border-bottom-right-radius: 5px;
+}
+
+.ai .bubble {
+  background: #eef5f0;
+  color: #18352b;
+  border-bottom-left-radius: 5px;
+}
+
+.message-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 7px;
+}
+
+.small-btn {
+  border: none;
+  background: #dcece2;
+  color: #176b4d;
+  border-radius: 9px;
+  padding: 5px 8px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* TYPING */
+.typing {
+  display: none;
+  color: #648074;
+  font-size: 13px;
+  padding: 5px;
+}
+
+/* INPUT */
+.input-area {
+  display: flex;
+  gap: 7px;
+  margin-top: 12px;
+  background: #f1f6f3;
+  padding: 8px;
+  border-radius: 17px;
+}
+
+#question {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 10px;
+  font-size: 14px;
+  color: #18352b;
+}
+
+.icon-btn {
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 13px;
+  background: white;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.send-btn {
+  background: #176b4d;
+  color: white;
+}
+
+/* QUICK QUESTIONS */
+.quick-section {
+  margin-top: 18px;
+}
+
+.quick-section h2 {
+  font-size: 17px;
+  margin-bottom: 11px;
+}
+
+.quick-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.quick-btn {
+  border: 1px solid #cfe2d5;
+  background: white;
+  color: #176b4d;
+  border-radius: 18px;
+  padding: 9px 12px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+/* FEATURES */
+.features {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.feature {
+  background: white;
+  padding: 15px;
+  border-radius: 17px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.04);
+}
+
+.feature-icon {
+  font-size: 25px;
+}
+
+.feature h3 {
+  font-size: 14px;
+  margin-top: 7px;
+}
+
+.feature p {
+  font-size: 11px;
+  color: #71847a;
+  margin-top: 4px;
+}
+
+/* NAV */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(900px, 100%);
+  background: white;
+  border-top: 1px solid #dce8df;
+  display: flex;
+  justify-content: space-around;
+  padding: 9px 5px;
+  z-index: 100;
+}
+
+.nav-item {
+  text-decoration: none;
+  color: #718078;
+  font-size: 10px;
+  text-align: center;
+  padding: 5px;
+}
+
+.nav-item span {
+  display: block;
+  font-size: 20px;
+  margin-bottom: 3px;
+}
+
+.nav-item.active {
+  color: #176b4d;
+  font-weight: bold;
+}
+
+/* VOICE */
+.listening {
+  animation: pulse 1s infinite;
+  background: #dff4e7 !important;
+}
+
+@keyframes pulse {
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .chat {
+    height: 390px;
+  }
+
+  .bubble {
+    max-width: 88%;
+  }
+
+  .features {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-top">
+
+      <button class="back-btn" onclick="goHome()">←</button>
+
+      <div>
+        <h1>🤖 Agroverse AI</h1>
+        <p>Smart farming assistant</p>
+      </div>
+
+      <div style="width:42px;"></div>
+
+    </div>
+  </header>
+
+
+  <main class="main">
+
+    <!-- AI CHAT CARD -->
+    <section class="ai-card">
+
+      <div class="toolbar">
+
+        <div class="language-box">
+          🌐
+          <select id="language" onchange="changeLanguage()">
+            <option value="en">English</option>
+            <option value="ta">தமிழ்</option>
+          </select>
+        </div>
+
+        <button class="clear-btn" onclick="clearChat()">
+          🗑️ Clear
+        </button>
+
+      </div>
+
+
+      <div class="status" id="status">
+        🟢 AI Assistant ready — Ask anything about your farm
+      </div>
+
+
+      <!-- CHAT -->
+      <div class="chat" id="chat"></div>
+
+      <div class="typing" id="typing">
+        🤖 Agroverse AI is thinking...
+      </div>
+
+
+      <!-- INPUT -->
+      <div class="input-area">
+
+        <input
+          id="question"
+          type="text"
+          placeholder="Ask about your farm..."
+          autocomplete="off"
+        >
+
+        <button
+          class="icon-btn"
+          id="micBtn"
+          onclick="startVoice()"
+          title="Voice input">
+          🎤
+        </button>
+
+        <button
+          class="icon-btn send-btn"
+          onclick="sendMessage()">
+          ➤
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- QUICK QUESTIONS -->
+    <section class="quick-section">
+
+      <h2>⚡ Quick Questions</h2>
+
+      <div class="quick-buttons">
+
+        <button class="quick-btn"
+          onclick="askQuick('Should I water my crop today?')">
+          💧 Water my crop
+        </button>
+
+        <button class="quick-btn"
+          onclick="askQuick('Will rain affect my farm?')">
+          🌧️ Rain advice
+        </button>
+
+        <button class="quick-btn"
+          onclick="askQuick('What should I do about yellow leaves?')">
+          🍃 Yellow leaves
+        </button>
+
+        <button class="quick-btn"
+          onclick="askQuick('How can I improve my soil?')">
+          🌱 Soil health
+        </button>
+
+        <button class="quick-btn"
+          onclick="askQuick('Give me today farm advice')">
+          📋 Farm advice
+        </button>
+
+        <button class="quick-btn"
+          onclick="askQuick('How can I control pests?')">
+          🐛 Pest control
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- FEATURES -->
+    <section class="features">
+
+      <div class="feature">
+        <div class="feature-icon">🌾</div>
+        <h3>Crop Guidance</h3>
+        <p>Get practical crop management advice.</p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">💧</div>
+        <h3>Irrigation</h3>
+        <p>Learn when and how to water crops.</p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">🐛</div>
+        <h3>Disease Help</h3>
+        <p>Get guidance for common crop problems.</p>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">🌦️</div>
+        <h3>Weather Advice</h3>
+        <p>Understand weather impacts on farming.</p>
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+
+    <a class="nav-item" href="index.html">
+      <span>🏠</span>
+      Home
+    </a>
+
+    <a class="nav-item" href="farm.html">
+      <span>🌾</span>
+      My Farm
+    </a>
+
+    <a class="nav-item" href="index.html#weather">
+      <span>🌦️</span>
+      Weather
+    </a>
+
+    <a class="nav-item" href="index.html#water">
+      <span>💧</span>
+      Water
+    </a>
+
+    <a class="nav-item active" href="ai-assistant.html">
+      <span>🤖</span>
+      AI Assistant
+    </a>
+
+  </nav>
+
+</div>
+
+
+<script>
+
+/* ==============================
+   INITIAL SETTINGS
+============================== */
+
+let currentLanguage =
+  localStorage.getItem("agroverseLanguage") || "en";
+
+document.getElementById("language").value = currentLanguage;
+
+
+/* ==============================
+   CHAT STORAGE
+============================== */
+
+let messages =
+  JSON.parse(localStorage.getItem("agroverseAIChat") || "[]");
+
+
+/* ==============================
+   START CHAT
+============================== */
+
+function initializeChat() {
+
+  if (messages.length === 0) {
+
+    if (currentLanguage === "ta") {
+
+      addMessage(
+        "வணக்கம் விவசாயி! 🌾\n\nநான் Agroverse AI உதவியாளர். உங்கள் பயிர், மண், தண்ணீர், நோய் மற்றும் விவசாயம் தொடர்பான கேள்விகளை கேளுங்கள்.",
+        "ai",
+        false
+      );
+
+    } else {
+
+      addMessage(
+        "Hello Farmer! 🌾\n\nI am your Agroverse AI Assistant. Ask me anything about your crops, soil, irrigation, weather, pests or farm management.",
+        "ai",
+        false
+      );
+
+    }
+
+  } else {
+
+    renderMessages();
+
+  }
+
+}
+
+
+/* ==============================
+   ADD MESSAGE
+============================== */
+
+function addMessage(text, sender, save = true) {
+
+  const chat = document.getElementById("chat");
+
+  const wrapper = document.createElement("div");
+
+  wrapper.className =
+    "message " + sender;
+
+  const bubble = document.createElement("div");
+
+  bubble.className = "bubble";
+
+  bubble.textContent = text;
+
+  wrapper.appendChild(bubble);
+
+  if (sender === "ai") {
+
+    const actions =
+      document.createElement("div");
+
+    actions.className =
+      "message-actions";
+
+    const speakButton =
+      document.createElement("button");
+
+    speakButton.className =
+      "small-btn";
+
+    speakButton.textContent =
+      "🔊 Listen";
+
+    speakButton.onclick =
+      () => speakText(text);
+
+    actions.appendChild(speakButton);
+
+    wrapper.appendChild(actions);
+
+  }
+
+  chat.appendChild(wrapper);
+
+  chat.scrollTop =
+    chat.scrollHeight;
+
+
+  if (save) {
+
+    messages.push({
+      text: text,
+      sender: sender
+    });
+
+    localStorage.setItem(
+      "agroverseAIChat",
+      JSON.stringify(messages)
+    );
+
+  }
+
+}
+
+
+/* ==============================
+   RENDER OLD CHAT
+============================== */
+
+function renderMessages() {
+
+  const chat =
+    document.getElementById("chat");
+
+  chat.innerHTML = "";
+
+  messages.forEach(message => {
+
+    addMessage(
+      message.text,
+      message.sender,
+      false
+    );
+
+  });
+
+}
+
+
+/* ==============================
+   SEND MESSAGE
+============================== */
+
+function sendMessage() {
+
+  const input =
+    document.getElementById("question");
+
+  const question =
+    input.value.trim();
+
+  if (!question) return;
+
+
+  addMessage(
+    question,
+    "user"
+  );
+
+  input.value = "";
+
+
+  document.getElementById("typing").style.display =
+    "block";
+
+
+  setTimeout(() => {
+
+    const answer =
+      getAIResponse(question);
+
+    document.getElementById("typing").style.display =
+      "none";
+
+    addMessage(
+      answer,
+      "ai"
+    );
+
+  }, 700);
+
+}
+
+
+/* ==============================
+   ENTER KEY
+============================== */
+
+document
+  .getElementById("question")
+  .addEventListener("keydown", function(event) {
+
+    if (event.key === "Enter") {
+
+      sendMessage();
+
+    }
+
+  });
+
+
+/* ==============================
+   QUICK QUESTION
+============================== */
+
+function askQuick(question) {
+
+  document.getElementById("question").value =
+    question;
+
+  sendMessage();
+
+}
+
+
+/* ==============================
+   LANGUAGE
+============================== */
+
+function changeLanguage() {
+
+  currentLanguage =
+    document.getElementById("language").value;
+
+  localStorage.setItem(
+    "agroverseLanguage",
+    currentLanguage
+  );
+
+
+  const placeholder =
+    document.getElementById("question");
+
+
+  if (currentLanguage === "ta") {
+
+    placeholder.placeholder =
+      "உங்கள் விவசாய கேள்வியை கேளுங்கள்...";
+
+    document.getElementById("status").textContent =
+      "🟢 Agroverse AI தயாராக உள்ளது — உங்கள் விவசாய கேள்வியை கேளுங்கள்";
+
+  } else {
+
+    placeholder.placeholder =
+      "Ask about your farm...";
+
+    document.getElementById("status").textContent =
+      "🟢 AI Assistant ready — Ask anything about your farm";
+
+  }
+
+}
+
+
+/* ==============================
+   AI RESPONSE ENGINE
+============================== */
+
+function getAIResponse(question) {
+
+  const q =
+    question.toLowerCase();
+
+
+  /* ---------- TAMIL ---------- */
+
+  if (
+    currentLanguage === "ta" ||
+    /[\u0B80-\u0BFF]/.test(question)
+  ) {
+
+    if (
+      q.includes("தண்ணீர்") ||
+      q.includes("நீர்") ||
+      q.includes("பாசனம்")
+    ) {
+
+      return "💧 பயிருக்கு தேவையான அளவு மட்டுமே தண்ணீர் கொடுக்க வேண்டும்.\n\nமண்ணின் ஈரப்பதத்தை முதலில் சரிபார்க்கவும். மண் மேல் பகுதி உலர்ந்திருந்தால் பாசனம் தேவைப்படலாம்.\n\nஅதிகமாக தண்ணீர் கொடுப்பதை தவிர்க்கவும்.";
+
+    }
+
+
+    if (
+      q.includes("மழை") ||
+      q.includes("வானிலை")
+    ) {
+
+      return "🌦️ மழை வருவதற்கு முன் தேவையற்ற பாசனத்தை தவிர்க்கவும்.\n\nமழை அதிகமாக இருந்தால் வயலில் நீர் தேங்காமல் வடிகால் வசதி இருப்பதை உறுதி செய்யுங்கள்.";
+
+    }
+
+
+    if (
+      q.includes("மஞ்சள்") ||
+      q.includes("இலை")
+    ) {
+
+      return "🍃 இலைகள் மஞ்சள் நிறமாக மாறுவதற்கு பல காரணங்கள் இருக்கலாம்.\n\nமண் ஈரப்பதம், ஊட்டச்சத்து குறைபாடு, வேர் பிரச்சனை மற்றும் பூச்சி தாக்குதலை சரிபார்க்கவும்.\n\nபிரச்சனை தொடர்ந்து இருந்தால் இலை புகைப்படத்தை வைத்து பரிசோதிக்கவும்.";
+
+    }
+
+
+    if (
+      q.includes("மண்") ||
+      q.includes("soil")
+    ) {
+
+      return "🌱 மண் ஆரோக்கியத்தை மேம்படுத்த:\n\n• மண் பரிசோதனை செய்யுங்கள்\n• தேவையான உரத்தை மட்டும் பயன்படுத்துங்கள்\n• இயற்கை உரம்/கம்போஸ்ட் சேர்க்கலாம்\n• பயிர் சுழற்சியை பின்பற்றுங்கள்\n• மண் ஈரப்பதத்தை பாதுகாக்க mulch பயன்படுத்தலாம்.";
+
+    }
+
+
+    if (
+      q.includes("பூச்சி") ||
+      q.includes("நோய்")
+    ) {
+
+      return "🐛 முதலில் பூச்சி அல்லது நோயின் அறிகுறியை சரியாக கண்டறிய வேண்டும்.\n\nபாதிக்கப்பட்ட இலைகளை தனியாக கவனிக்கவும். அதிகமாக பாதிக்கப்பட்ட பகுதிகளை அகற்றவும்.\n\nமருந்து பயன்படுத்துவதற்கு முன் வேளாண்மை நிபுணரின் ஆலோசனையை பெறுவது பாதுகாப்பானது.";
+
+    }
+
+
+    return "🌾 உங்கள் கேள்வியை புரிந்துகொண்டேன்.\n\nபயிர் பெயர், பயிரின் வயது, மண் வகை மற்றும் பிரச்சனை என்ன என்பதை கூறினால் இன்னும் குறிப்பிட்ட விவசாய வழிகாட்டுதலை வழங்க முடியும்.";
+
+  }
+
+
+  /* ---------- ENGLISH ---------- */
+
+  if (
+    q.includes("water") ||
+    q.includes("irrigation") ||
+    q.includes("watering")
+  ) {
+
+    return "💧 Irrigation advice:\n\nCheck the soil moisture before watering. If the root-zone soil is still moist, avoid unnecessary irrigation.\n\nWater according to the crop stage, soil type and weather conditions. Avoid waterlogging.";
+
+  }
+
+
+  if (
+    q.includes("rain") ||
+    q.includes("weather") ||
+    q.includes("forecast")
+  ) {
+
+    return "🌦️ Weather advice:\n\nIf rain is expected, avoid unnecessary irrigation. Make sure your field has proper drainage so excess water does not remain around the crop roots.";
+
+  }
+
+
+  if (
+    q.includes("yellow") ||
+    q.includes("leaf") ||
+    q.includes("leaves")
+  ) {
+
+    return "🍃 Yellow leaves can have several causes, including nutrient deficiency, excess water, poor drainage, root problems or pests.\n\nCheck soil moisture and inspect the underside of leaves for pests. A crop photo can help with further diagnosis.";
+
+  }
+
+
+  if (
+    q.includes("soil") ||
+    q.includes("fertilizer") ||
+    q.includes("nutrient")
+  ) {
+
+    return "🌱 Soil health tips:\n\n• Test the soil before applying fertilizers\n• Add suitable organic matter or compost\n• Avoid excessive fertilizer use\n• Maintain soil moisture\n• Consider crop rotation\n\nUse fertilizer recommendations based on your soil test whenever possible.";
+
+  }
+
+
+  if (
+    q.includes("pest") ||
+    q.includes("insect") ||
+    q.includes("disease")
+  ) {
+
+    return "🐛 Pest and disease advice:\n\nFirst identify the symptoms and affected plant parts. Inspect leaves, stems and the underside of leaves.\n\nRemove severely affected plant material where appropriate and seek local agricultural expert advice before applying pesticides.";
+
+  }
+
+
+  if (
+    q.includes("crop") ||
+    q.includes("plant")
+  ) {
+
+    return "🌾 I can help with crop management.\n\nTell me:\n1. Crop name\n2. Crop age/stage\n3. Soil type\n4. Main problem\n5. Recent weather conditions\n\nThen I can give more specific guidance.";
+
+  }
+
+
+  if (
+    q.includes("hello") ||
+    q.includes("hi") ||
+    q.includes("help")
+  ) {
+
+    return "👋 Hello Farmer!\n\nI can help you with:\n\n🌾 Crop management\n💧 Irrigation\n🌦️ Weather impacts\n🌱 Soil health\n🐛 Pest and disease guidance\n📋 General farm management\n\nAsk me your question.";
+
+  }
+
+
+  return "🌾 I understand your question.\n\nFor more useful farm guidance, tell me your crop name, crop stage, soil type and what problem you are facing.\n\nYou can also ask about irrigation, weather, soil, pests or crop diseases.";
+
+}
+
+
+/* ==============================
+   VOICE INPUT
+============================== */
+
+function startVoice() {
+
+  const SpeechRecognition =
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
+
+
+  if (!SpeechRecognition) {
+
+    alert(
+      "Voice input is not supported in this browser. Please try Chrome."
+    );
+
+    return;
+
+  }
+
+
+  const recognition =
+    new SpeechRecognition();
+
+
+  recognition.lang =
+    currentLanguage === "ta"
+      ? "ta-IN"
+      : "en-IN";
+
+
+  recognition.interimResults =
+    false;
+
+  recognition.continuous =
+    false;
+
+
+  const mic =
+    document.getElementById("micBtn");
+
+
+  mic.classList.add("listening");
+
+  document.getElementById("status").textContent =
+    currentLanguage === "ta"
+      ? "🎤 கேட்கிறது... பேசுங்கள்"
+      : "🎤 Listening... Speak now";
+
+
+  recognition.onresult =
+    function(event) {
+
+      const transcript =
+        event.results[0][0].transcript;
+
+      document.getElementById("question").value =
+        transcript;
+
+      mic.classList.remove("listening");
+
+      document.getElementById("status").textContent =
+        currentLanguage === "ta"
+          ? "🟢 உங்கள் கேள்வி பெறப்பட்டது"
+          : "🟢 Question received";
+
+      sendMessage();
+
+    };
+
+
+  recognition.onerror =
+    function() {
+
+      mic.classList.remove("listening");
+
+      document.getElementById("status").textContent =
+        currentLanguage === "ta"
+          ? "⚠️ குரலை பெற முடியவில்லை"
+          : "⚠️ Could not recognize voice";
+
+    };
+
+
+  recognition.onend =
+    function() {
+
+      mic.classList.remove("listening");
+
+    };
+
+
+  try {
+
+    recognition.start();
+
+  } catch(error) {
+
+    mic.classList.remove("listening");
+
+  }
+
+}
+
+
+/* ==============================
+   VOICE OUTPUT
+============================== */
+
+function speakText(text) {
+
+  if (!("speechSynthesis" in window)) {
+
+    alert(
+      "Voice output is not supported in this browser."
+    );
+
+    return;
+
+  }
+
+
+  window.speechSynthesis.cancel();
+
+
+  const speech =
+    new SpeechSynthesisUtterance(text);
+
+
+  speech.lang =
+    currentLanguage === "ta"
+      ? "ta-IN"
+      : "en-IN";
+
+
+  speech.rate = 0.9;
+
+  speech.pitch = 1;
+
+
+  window.speechSynthesis.speak(
+    speech
+  );
+
+}
+
+
+/* ==============================
+   CLEAR CHAT
+============================== */
+
+function clearChat() {
+
+  const confirmClear =
+    confirm( 
+    currentLanguage === "ta"
+        ? "உங்கள் chat history-ஐ அழிக்க வேண்டுமா?"
+        : "Clear your chat history?"
+    );
+
+
+  if (!confirmClear) return;
+
+
+  messages = [];
+
+  localStorage.removeItem(
+    "agroverseAIChat"
+  );
+
+  document.getElementById("chat").innerHTML =
+    "";
+
+
+  initializeChat();
+
+}
+
+
+/* ==============================
+   HOME
+============================== */
+
+function goHome() {
+
+  window.location.href =
+    "index.html";
+
+}
+
+
+/* ==============================
+   START
+============================== */
+
+changeLanguage();
+
+initializeChat();
+
+</script>
+
+</body>
+</html>
