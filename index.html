@@ -940,12 +940,236 @@ button>
     if (e.target === this) {
       closeModal();
     }
-  });
+  }); 
 </script>
+<!-- 🌾 AGROVERSE AI - SMART IRRIGATION -->
+<style>
+.irrigation-section {
+  margin: 20px 0;
+  padding: 20px;
+  background: linear-gradient(135deg, #e8f8ee, #f7fff9);
+  border-radius: 22px;
+  border: 1px solid #ccebd6;
+  box-shadow: 0 8px 25px rgba(0,0,0,.06);
+}
 
+.irrigation-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.irrigation-title h2 {
+  margin: 0;
+  font-size: 21px;
+}
+
+.ai-badge {
+  background: #167c3a;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.irrigation-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.irrigation-card {
+  background: white;
+  padding: 15px;
+  border-radius: 16px;
+  border: 1px solid #e2eee6;
+}
+
+.irrigation-card .icon {
+  font-size: 25px;
+}
+
+.irrigation-card .label {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 5px;
+}
+
+.irrigation-card .value {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 3px;
+}
+
+.irrigation-recommendation {
+  margin-top: 15px;
+  padding: 16px;
+  border-radius: 17px;
+  background: #167c3a;
+  color: white;
+}
+
+.irrigation-recommendation h3 {
+  margin: 0 0 8px;
+}
+
+.irrigation-recommendation p {
+  margin: 5px 0;
+  line-height: 1.5;
+}
+
+.irrigation-button {
+  width: 100%;
+  border: none;
+  padding: 13px;
+  margin-top: 15px;
+  border-radius: 14px;
+  background: #0d5f2d;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.irrigation-button:active {
+  transform: scale(.98);
+}
+
+@media(max-width:480px) {
+  .irrigation-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+</style>
+
+<section class="irrigation-section" id="smartIrrigation">
+
+  <div class="irrigation-title">
+    <h2>💧 Smart Irrigation AI</h2>
+    <span class="ai-badge">AI POWERED</span>
+  </div>
+
+  <div class="irrigation-grid">
+
+    <div class="irrigation-card">
+      <div class="icon">🌱</div>
+      <div class="label">Soil Moisture</div>
+      <div class="value" id="soilMoisture">42%</div>
+    </div>
+
+    <div class="irrigation-card">
+      <div class="icon">🌡️</div>
+      <div class="label">Temperature</div>
+      <div class="value" id="irrigationTemp">29°C</div>
+    </div>
+
+    <div class="irrigation-card">
+      <div class="icon">🌧️</div>
+      <div class="label">Rain Probability</div>
+      <div class="value" id="rainChance">20%</div>
+    </div>
+
+    <div class="irrigation-card">
+      <div class="icon">💦</div>
+      <div class="label">Water Required</div>
+      <div class="value" id="waterNeed">Medium</div>
+    </div>
+
+  </div>
+
+  <div class="irrigation-recommendation">
+
+    <h3>🤖 AI Recommendation</h3>
+
+    <p id="irrigationAdvice">
+      Soil moisture is moderate. Irrigation is recommended today.
+    </p>
+
+    <p>
+      ⏱️ Best time:
+      <strong id="bestTime">5:30 PM – 6:15 PM</strong>
+    </p>
+
+    <p>
+      💧 Suggested duration:
+      <strong id="irrigationDuration">35 minutes</strong>
+    </p>
+
+  </div>
+
+  <button class="irrigation-button" onclick="runIrrigationAI()">
+    🤖 Run AI Irrigation Analysis
+  </button>
+
+</section>
+
+<script>
+function runIrrigationAI() {
+
+  const moisture = Math.floor(Math.random() * 31) + 30;
+  const rain = Math.floor(Math.random() * 61) + 10;
+  const temperature = Math.floor(Math.random() * 8) + 27;
+
+  document.getElementById("soilMoisture").textContent =
+    moisture + "%";
+
+  document.getElementById("rainChance").textContent =
+    rain + "%";
+
+  document.getElementById("irrigationTemp").textContent =
+    temperature + "°C";
+
+  let advice = "";
+  let water = "";
+  let duration = "";
+
+  if (rain >= 60) {
+
+    advice =
+      "🌧️ Rain probability is high. AI recommends delaying irrigation to save water.";
+
+    water = "Low";
+    duration = "0 minutes";
+
+  } else if (moisture < 40) {
+
+    advice =
+      "⚠️ Soil moisture is low. AI recommends irrigation as soon as possible.";
+
+    water = "High";
+    duration = "45 minutes";
+
+  } else if (moisture < 55) {
+
+    advice =
+      "💧 Soil moisture is moderate. AI recommends controlled irrigation today.";
+
+    water = "Medium";
+    duration = "35 minutes";
+
+  } else {
+
+    advice =
+      "✅ Soil moisture is sufficient. Irrigation can be reduced or skipped.";
+
+    water = "Low";
+    duration = "15 minutes";
+
+  }
+
+  document.getElementById("irrigationAdvice").textContent = advice;
+  document.getElementById("waterNeed").textContent = water;
+  document.getElementById("irrigationDuration").textContent = duration;
+
+  alert("🌾 Agroverse AI irrigation analysis completed!");
+}
+</script>
 </body>
 <\html>
 
       
-    .
+    
   
